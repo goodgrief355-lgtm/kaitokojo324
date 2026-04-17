@@ -80,6 +80,7 @@
       <ul class="nav__menu" id="nav-menu">
         <li><a href="#about">サービス</a></li>
         <li><a href="#features">特長</a></li>
+        <li><a href="#voice">声</a></li>
         <li><a href="#teacher">講師紹介</a></li>
         <li><a href="#flow">ご利用の流れ</a></li>
         <li><a href="#price">料金</a></li>
@@ -92,15 +93,49 @@
   <main id="main">
     <section class="hero">
       <div class="hero__inner">
-        <p class="hero__lead">中学生・高校生のためのオンライン家庭教師</p>
-        <h1 class="hero__title">学びを、未来への<br>設計図に。</h1>
-        <p class="hero__desc">
-          英語・数学・国語・理科・社会の5教科に対応。<br>
-          一人ひとりの目標に寄り添い、「わかる」を「できる」に変える授業を行います。
-        </p>
-        <div class="hero__actions">
-          <a href="#contact" class="btn btn--primary">無料体験授業を申し込む</a>
-          <a href="#about" class="btn btn--ghost">サービスを見る</a>
+        <div class="hero__body">
+          <p class="hero__lead">中学生・高校生のためのオンライン家庭教師</p>
+          <h1 class="hero__title">学びを、未来への<br>設計図に。</h1>
+          <p class="hero__desc">
+            英語・数学・国語・理科・社会の5教科に対応。<br>
+            一人ひとりの目標に寄り添い、「わかる」を「できる」に変える授業を行います。
+          </p>
+          <div class="hero__actions">
+            <a href="#contact" class="btn btn--primary">無料体験授業を申し込む</a>
+            <a href="#about" class="btn btn--ghost">サービスを見る</a>
+          </div>
+        </div>
+        <div class="hero__visual" aria-hidden="true">
+          <svg class="hero__svg" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img">
+            <defs>
+              <linearGradient id="heroGrad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#b8925a" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#1f3a5f" stop-opacity="0.15"/>
+              </linearGradient>
+              <pattern id="heroGrid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1f3a5f" stroke-opacity="0.08" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect x="0" y="0" width="480" height="360" fill="url(#heroGrid)"/>
+            <circle cx="380" cy="90" r="70" fill="url(#heroGrad)"/>
+            <polyline points="40,280 120,230 200,260 280,170 360,200 440,110" fill="none" stroke="#1f3a5f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="40" cy="280" r="6" fill="#1f3a5f"/>
+            <circle cx="120" cy="230" r="6" fill="#1f3a5f"/>
+            <circle cx="200" cy="260" r="6" fill="#1f3a5f"/>
+            <circle cx="280" cy="170" r="6" fill="#1f3a5f"/>
+            <circle cx="360" cy="200" r="6" fill="#1f3a5f"/>
+            <circle cx="440" cy="110" r="9" fill="#b8925a"/>
+            <g transform="translate(150 100)">
+              <path d="M 0 0 L 90 0 L 90 80 L 45 70 L 0 80 Z" fill="#ffffff" stroke="#1f3a5f" stroke-width="2" stroke-linejoin="round"/>
+              <line x1="45" y1="5" x2="45" y2="70" stroke="#1f3a5f" stroke-width="2"/>
+              <line x1="12" y1="22" x2="38" y2="22" stroke="#b8925a" stroke-width="2"/>
+              <line x1="12" y1="34" x2="38" y2="34" stroke="#b8925a" stroke-width="2"/>
+              <line x1="12" y1="46" x2="32" y2="46" stroke="#b8925a" stroke-width="2"/>
+              <line x1="52" y1="22" x2="78" y2="22" stroke="#b8925a" stroke-width="2"/>
+              <line x1="52" y1="34" x2="78" y2="34" stroke="#b8925a" stroke-width="2"/>
+              <line x1="52" y1="46" x2="72" y2="46" stroke="#b8925a" stroke-width="2"/>
+            </g>
+          </svg>
         </div>
       </div>
     </section>
@@ -147,6 +182,49 @@
             </p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section id="voice" class="section">
+      <div class="section__inner">
+        <p class="section__eyebrow">Voice</p>
+        <h2 class="section__title">受講生の声</h2>
+        <p class="section__text">
+          実際に授業を受けた生徒さんからいただいた声の一部をご紹介します。
+        </p>
+        <div class="voices">
+          <figure class="voice">
+            <blockquote class="voice__text">
+              最初は応用問題になると手が止まってしまうことが多かったですが、授業の中で考え方から教えてもらえたことで、少しずつ自分で解けるようになりました。解き直しを続ける習慣もついて、最後は安定して点数が取れるようになりました。やってきたことが結果につながってうれしかったです。
+            </blockquote>
+            <figcaption class="voice__meta">中学3年生・男子</figcaption>
+          </figure>
+          <figure class="voice">
+            <blockquote class="voice__text">
+              英語の長文が苦手で悩んでいましたが、授業の中で読み方や勉強の進め方を教えてもらってから、少しずつ読めるようになりました。教えてもらったことを続けることで自信がついて、本番も落ち着いて解くことができました。
+            </blockquote>
+            <figcaption class="voice__meta">中学3年生・女子</figcaption>
+          </figure>
+          <figure class="voice">
+            <blockquote class="voice__text">
+              進路について迷っていた時期もありましたが、授業の中で将来の話をしながら整理していく中で、自分の中で納得して目標を決めることができました。そこからはやるべきことがはっきりして、計画的に勉強を進められるようになりました。
+            </blockquote>
+            <figcaption class="voice__meta">高校3年生・男子</figcaption>
+          </figure>
+          <figure class="voice">
+            <blockquote class="voice__text">
+              思うように結果が出ずに不安になることもありましたが、授業の中で勉強だけでなく気持ちの面でも支えてもらえたことで、前向きに続けることができました。最後まであきらめずにやり切れたことが自信になりました。
+            </blockquote>
+            <figcaption class="voice__meta">高校3年生・女子</figcaption>
+          </figure>
+          <figure class="voice">
+            <blockquote class="voice__text">
+              中学生になって勉強のやり方が分からなかったけど、授業の中で「何をやるべきか」を教えてもらえて、少しずつ自分で進められるようになってきました。振り返りをする中でできることも増えてきて、前より勉強に取り組みやすくなりました。
+            </blockquote>
+            <figcaption class="voice__meta">中学1年生・男子</figcaption>
+          </figure>
+        </div>
+        <p class="voices__note">※ 掲載内容は実際にいただいたお声をもとに、匿名化・一部編集のうえ掲載しています。</p>
       </div>
     </section>
 
@@ -226,33 +304,86 @@
         <h2 class="section__title">料金プラン</h2>
         <p class="section__text">
           1コマ<strong>60分 / 90分</strong>から選択可能。月謝制・当月後払いのシンプルな料金設定です。<br>
-          <strong>入会金0円</strong>・教材は市販テキストを実費でご購入いただきます。
+          <strong>入会金0円</strong>。中学・高校生を中心に、小学生も個別にご相談いただけます。
         </p>
-        <div class="plans">
-          <div class="plan">
-            <h3 class="plan__name">中学生コース</h3>
-            <p class="plan__price"><span>¥</span>5,500<small>〜 / 60分</small></p>
-            <ul class="plan__list">
-              <li>英数国理社に対応</li>
-              <li>定期テスト対策</li>
-              <li>高校受験対策</li>
-              <li>学習習慣のサポート</li>
-            </ul>
+        <div class="price-table" role="table" aria-label="学年別料金表">
+          <div class="price-table__head" role="row">
+            <div role="columnheader">学年</div>
+            <div role="columnheader">60分</div>
+            <div role="columnheader">90分</div>
           </div>
-          <div class="plan plan--highlight">
-            <h3 class="plan__name">高校生コース</h3>
-            <p class="plan__price"><span>¥</span>6,600<small>〜 / 60分</small></p>
-            <ul class="plan__list">
-              <li>英数理に対応</li>
-              <li>定期テスト対策</li>
-              <li>大学受験対策</li>
-              <li>進路・学部選択相談</li>
-            </ul>
+          <div class="price-table__row" role="row">
+            <div class="price-table__grade" role="rowheader">小学生</div>
+            <div class="price-table__cell" role="cell" data-label="60分">
+              <span class="price-table__price">¥3,980<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥4,378〜)</span>
+            </div>
+            <div class="price-table__cell" role="cell" data-label="90分">
+              <span class="price-table__price">¥5,770<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥6,347〜)</span>
+            </div>
+          </div>
+          <div class="price-table__row" role="row">
+            <div class="price-table__grade" role="rowheader">中学1・2年生</div>
+            <div class="price-table__cell" role="cell" data-label="60分">
+              <span class="price-table__price">¥4,480<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥4,928〜)</span>
+            </div>
+            <div class="price-table__cell" role="cell" data-label="90分">
+              <span class="price-table__price">¥6,500<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥7,150〜)</span>
+            </div>
+          </div>
+          <div class="price-table__row" role="row">
+            <div class="price-table__grade" role="rowheader">中学3年生</div>
+            <div class="price-table__cell" role="cell" data-label="60分">
+              <span class="price-table__price">¥4,980<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥5,478〜)</span>
+            </div>
+            <div class="price-table__cell" role="cell" data-label="90分">
+              <span class="price-table__price">¥7,220<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥7,942〜)</span>
+            </div>
+          </div>
+          <div class="price-table__row" role="row">
+            <div class="price-table__grade" role="rowheader">高校1・2年生</div>
+            <div class="price-table__cell" role="cell" data-label="60分">
+              <span class="price-table__price">¥5,480<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥6,028〜)</span>
+            </div>
+            <div class="price-table__cell" role="cell" data-label="90分">
+              <span class="price-table__price">¥7,950<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥8,745〜)</span>
+            </div>
+          </div>
+          <div class="price-table__row" role="row">
+            <div class="price-table__grade" role="rowheader">高校3年生</div>
+            <div class="price-table__cell" role="cell" data-label="60分">
+              <span class="price-table__price">¥5,980<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥6,578〜)</span>
+            </div>
+            <div class="price-table__cell" role="cell" data-label="90分">
+              <span class="price-table__price">¥8,670<small>〜</small></span>
+              <span class="price-table__tax">(税込 ¥9,537〜)</span>
+            </div>
           </div>
         </div>
+        <div class="plans__extra">
+          <h3 class="plans__extra-title">別途かかる費用</h3>
+          <dl class="plans__extra-list">
+            <dt>学習サポート費</dt>
+            <dd>月額 ¥3,000(税抜 / 税込 ¥3,300) <span class="plans__extra-note">教材選定・学習計画の作成・運営費として</span></dd>
+            <dt>教材費</dt>
+            <dd>市販テキストをご購入いただく場合の実費のみ</dd>
+            <dt>入会金</dt>
+            <dd>¥0</dd>
+          </dl>
+        </div>
         <p class="plans__note">
-          ※ 表示は税込価格です。90分コース、週2回・週3回コース等の詳細は無料カウンセリングにてご案内いたします。<br>
-          ※ 入会金0円・当月後払い(銀行振込)・教材費は市販テキストの実費のみ。
+          ※ 表示はすべて1コマあたりの授業料です。料金は税抜表記(括弧内に税込価格を併記)。<br>
+          ※「〜」は指導する時間帯や科目・内容により料金が変動することを示します。<br>
+          ※ 週2回・週3回コースや小学生の料金詳細は無料カウンセリングにてご案内いたします。<br>
+          ※ お支払いは当月後払い(銀行振込)。振込手数料はお客様のご負担となります。
         </p>
       </div>
     </section>
@@ -396,6 +527,11 @@
     </div>
   </footer>
 
+  <a href="#contact" class="float-cta" id="float-cta" aria-label="無料体験授業を申し込む">
+    <span class="float-cta__icon" aria-hidden="true">✉</span>
+    <span class="float-cta__text">無料体験<br>お申し込み</span>
+  </a>
+
   <div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie利用についての通知" hidden>
     <p class="cookie-banner__text">
       当サイトはサービス向上のためCookie（Google Analytics含む）を使用しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。
@@ -406,6 +542,21 @@
   <script>
     (function () {
       var banner = document.getElementById("cookie-banner");
+      var floatCta = document.getElementById("float-cta");
+      var contactSection = document.getElementById("contact");
+
+      function updateFloatCta() {
+        if (!floatCta) return;
+        var scrolled = window.scrollY > 400;
+        var cookieVisible = banner && !banner.hidden;
+        var atContact = false;
+        if (contactSection) {
+          var rect = contactSection.getBoundingClientRect();
+          atContact = rect.top < window.innerHeight * 0.8;
+        }
+        floatCta.classList.toggle("float-cta--visible", scrolled && !atContact && !cookieVisible);
+      }
+
       if (banner) {
         var dismissed = false;
         try { dismissed = localStorage.getItem("cookie-notice-dismissed") === "1"; } catch (e) {}
@@ -415,8 +566,15 @@
           closeBtn.addEventListener("click", function () {
             banner.hidden = true;
             try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
+            updateFloatCta();
           });
         }
+      }
+
+      if (floatCta) {
+        window.addEventListener("scroll", updateFloatCta, { passive: true });
+        window.addEventListener("resize", updateFloatCta);
+        updateFloatCta();
       }
 
       var toggle = document.querySelector(".nav__toggle");
