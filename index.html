@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホームページ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="nav__logo">MySite</div>
+      <ul class="nav__menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero__content">
+      <h1 class="hero__title">ようこそ、私のホームページへ</h1>
+      <p class="hero__subtitle">シンプルで美しいウェブサイトをお届けします</p>
+      <a href="#about" class="hero__cta">詳しく見る</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="section">
+      <h2 class="section__title">About</h2>
+      <p class="section__text">
+        このサイトは、私のプロジェクトやアイデアを紹介するための場所です。
+        訪れてくださった皆様に、少しでも有益な情報をお届けできれば幸いです。
+      </p>
+    </section>
+
+    <section id="features" class="section section--alt">
+      <h2 class="section__title">Features</h2>
+      <div class="cards">
+        <div class="card">
+          <h3 class="card__title">シンプル</h3>
+          <p class="card__text">無駄を省いた、読みやすく使いやすいデザイン。</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">レスポンシブ</h3>
+          <p class="card__text">スマートフォンからPCまで快適に閲覧可能。</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">高速</h3>
+          <p class="card__text">軽量で素早く表示されるウェブサイト。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2 class="section__title">Contact</h2>
+      <p class="section__text">お問い合わせはメールでお気軽にどうぞ。</p>
+      <a href="mailto:example@example.com" class="hero__cta">メールを送る</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MySite. All rights reserved.</p>
+  </footer>
+</body>
+</html>
