@@ -876,6 +876,68 @@ textarea.form__input {
   text-decoration: underline;
 }
 
+/* Cookie banner */
+.cookie-banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 150;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.cookie-banner[hidden] {
+  display: none;
+}
+
+.cookie-banner__text {
+  flex: 1;
+  margin: 0;
+}
+
+.cookie-banner__text a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.cookie-banner__close {
+  flex-shrink: 0;
+  background: #fff;
+  color: var(--color-primary);
+  border: 0;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+
+.cookie-banner__close:hover {
+  background: var(--color-bg);
+}
+
+@media (max-width: 560px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}
+
 /* Footer */
 .footer {
   background: var(--color-primary);

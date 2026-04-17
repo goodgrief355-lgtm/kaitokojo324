@@ -48,7 +48,7 @@
           </tr>
           <tr>
             <th>所在地</th>
-            <td>[市区町村]<br>※詳細な住所につきましては、ご請求があれば遅滞なく開示いたします。</td>
+            <td>兵庫県明石市<br>※詳細な住所につきましては、ご請求があれば遅滞なく開示いたします。</td>
           </tr>
           <tr>
             <th>電話番号</th>
@@ -56,7 +56,7 @@
           </tr>
           <tr>
             <th>メールアドレス</th>
-            <td>[準備中 — 確定後に更新]</td>
+            <td><a href="mailto:online.miraiplan@gmail.com">online.miraiplan@gmail.com</a></td>
           </tr>
           <tr>
             <th>販売価格</th>
@@ -123,5 +123,27 @@
       <p class="footer__copy">&copy; 2026 未来設計コーチング. All rights reserved.</p>
     </div>
   </footer>
+
+  <div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie利用についての通知" hidden>
+    <p class="cookie-banner__text">
+      当サイトはサービス向上のためCookie（Google Analytics含む）を使用しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。
+    </p>
+    <button type="button" class="cookie-banner__close" aria-label="通知を閉じる">閉じる</button>
+  </div>
+
+  <script>
+    (function () {
+      var banner = document.getElementById("cookie-banner");
+      if (!banner) return;
+      var dismissed = false;
+      try { dismissed = localStorage.getItem("cookie-notice-dismissed") === "1"; } catch (e) {}
+      if (dismissed) return;
+      banner.hidden = false;
+      banner.querySelector(".cookie-banner__close").addEventListener("click", function () {
+        banner.hidden = true;
+        try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
+      });
+    })();
+  </script>
 </body>
 </html>

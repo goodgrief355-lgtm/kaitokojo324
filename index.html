@@ -383,7 +383,7 @@
       <dl class="footer__info">
         <dt>運営</dt><dd>小城 海人(個人事業主)</dd>
         <dt>屋号</dt><dd>未来設計コーチング</dd>
-        <dt>所在地</dt><dd>[市区町村] ※詳細はご請求により開示</dd>
+        <dt>所在地</dt><dd>兵庫県明石市 ※詳細はご請求により開示</dd>
       </dl>
       <ul class="footer__links">
         <li><a href="#about">サービス</a></li>
@@ -396,8 +396,29 @@
     </div>
   </footer>
 
+  <div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie利用についての通知" hidden>
+    <p class="cookie-banner__text">
+      当サイトはサービス向上のためCookie（Google Analytics含む）を使用しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。
+    </p>
+    <button type="button" class="cookie-banner__close" aria-label="通知を閉じる">閉じる</button>
+  </div>
+
   <script>
     (function () {
+      var banner = document.getElementById("cookie-banner");
+      if (banner) {
+        var dismissed = false;
+        try { dismissed = localStorage.getItem("cookie-notice-dismissed") === "1"; } catch (e) {}
+        if (!dismissed) {
+          banner.hidden = false;
+          var closeBtn = banner.querySelector(".cookie-banner__close");
+          closeBtn.addEventListener("click", function () {
+            banner.hidden = true;
+            try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
+          });
+        }
+      }
+
       var toggle = document.querySelector(".nav__toggle");
       var menu = document.getElementById("nav-menu");
       if (toggle && menu) {
