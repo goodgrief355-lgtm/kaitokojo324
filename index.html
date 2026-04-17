@@ -15,14 +15,17 @@
   <meta property="og:url" content="https://goodgrief355-lgtm.github.io/kaitokojo324/">
   <meta property="og:title" content="未来設計コーチング | 中学生・高校生のためのオンライン家庭教師">
   <meta property="og:description" content="学びを、未来への設計図に。英数国理社に対応、進路設計まで伴走するオンライン家庭教師。">
-  <meta property="og:image" content="https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.svg">
+  <meta property="og:image" content="https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="未来設計コーチング">
   <meta property="og:locale" content="ja_JP">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="未来設計コーチング | 中学生・高校生のためのオンライン家庭教師">
   <meta name="twitter:description" content="学びを、未来への設計図に。英数国理社に対応、進路設計まで伴走するオンライン家庭教師。">
-  <meta name="twitter:image" content="https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.svg">
+  <meta name="twitter:image" content="https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.png">
 
   <script type="application/ld+json">
   {
@@ -32,7 +35,7 @@
     "alternateName": "MIRAI SEKKEI COACHING",
     "url": "https://goodgrief355-lgtm.github.io/kaitokojo324/",
     "logo": "https://goodgrief355-lgtm.github.io/kaitokojo324/favicon.svg",
-    "image": "https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.svg",
+    "image": "https://goodgrief355-lgtm.github.io/kaitokojo324/og-image.png",
     "description": "中学生・高校生のためのオンライン家庭教師。英数国理社に対応し、学習指導と進路コーチングを提供します。",
     "founder": {
       "@type": "Person",
@@ -47,6 +50,9 @@
   }
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP6NMWTLZE"></script>
@@ -458,7 +464,12 @@
           method="POST"
         >
           <input type="hidden" name="_subject" value="【未来設計コーチング】お問い合わせ">
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
+            <label>URL(空欄のままにしてください)<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            <label>電話(空欄のままにしてください)<input type="text" name="phone_confirm" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <input type="hidden" name="_form_loaded_at" id="_form_loaded_at" value="">
 
           <div class="form__row">
             <label class="form__label" for="name">お名前（保護者様） <span class="required">必須</span></label>
@@ -599,10 +610,46 @@
 
       var form = document.getElementById("contact-form");
       var status = document.getElementById("form-status");
+      var loadedAtInput = document.getElementById("_form_loaded_at");
+      if (loadedAtInput) {
+        loadedAtInput.value = String(Date.now());
+      }
       if (form && status) {
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var submitting = false;
+
+        function setSubmitting(isSubmitting) {
+          submitting = isSubmitting;
+          if (submitBtn) {
+            submitBtn.disabled = isSubmitting;
+            submitBtn.textContent = isSubmitting ? "送信中…" : "送信する";
+          }
+        }
+
         form.addEventListener("submit", function (e) {
           e.preventDefault();
-          status.textContent = "送信中...";
+          if (submitting) return;
+
+          var honeypotFilled =
+            (form.elements["_gotcha"] && form.elements["_gotcha"].value) ||
+            (form.elements["website"] && form.elements["website"].value) ||
+            (form.elements["phone_confirm"] && form.elements["phone_confirm"].value);
+          if (honeypotFilled) {
+            status.textContent = "送信できません。入力内容をご確認ください。";
+            status.className = "form__status form__status--error";
+            return;
+          }
+
+          var loadedAt = parseInt(loadedAtInput && loadedAtInput.value, 10) || 0;
+          var elapsed = Date.now() - loadedAt;
+          if (loadedAt && elapsed < 3000) {
+            status.textContent = "ご入力内容をもう一度ご確認のうえ、少し時間をおいて送信してください。";
+            status.className = "form__status form__status--error";
+            return;
+          }
+
+          setSubmitting(true);
+          status.textContent = "送信中…";
           status.className = "form__status form__status--loading";
           var data = new FormData(form);
           fetch(form.action, {
@@ -613,6 +660,7 @@
             .then(function (res) {
               if (res.ok) {
                 form.reset();
+                if (loadedAtInput) loadedAtInput.value = String(Date.now());
                 status.textContent =
                   "お問い合わせありがとうございます。内容を確認のうえ、担当者より2営業日以内にご連絡いたします。";
                 status.className = "form__status form__status--success";
@@ -631,6 +679,9 @@
               status.textContent =
                 "通信エラーが発生しました。ネット接続をご確認のうえ再度お試しください。";
               status.className = "form__status form__status--error";
+            })
+            .finally(function () {
+              setSubmitting(false);
             });
         });
       }
