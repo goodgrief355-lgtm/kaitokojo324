@@ -6,6 +6,9 @@
   <meta name="robots" content="noindex,follow">
   <title>利用規約 | 未来設計コーチング</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP6NMWTLZE"></script>
@@ -129,5 +132,27 @@
       <p class="footer__copy">&copy; 2026 未来設計コーチング. All rights reserved.</p>
     </div>
   </footer>
+
+  <div class="cookie-banner" id="cookie-banner" role="region" aria-label="Cookie利用についての通知" hidden>
+    <p class="cookie-banner__text">
+      当サイトはサービス向上のためCookie（Google Analytics含む）を使用しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。
+    </p>
+    <button type="button" class="cookie-banner__close" aria-label="通知を閉じる">閉じる</button>
+  </div>
+
+  <script>
+    (function () {
+      var banner = document.getElementById("cookie-banner");
+      if (!banner) return;
+      var dismissed = false;
+      try { dismissed = localStorage.getItem("cookie-notice-dismissed") === "1"; } catch (e) {}
+      if (dismissed) return;
+      banner.hidden = false;
+      banner.querySelector(".cookie-banner__close").addEventListener("click", function () {
+        banner.hidden = true;
+        try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
+      });
+    })();
+  </script>
 </body>
 </html>
