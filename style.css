@@ -41,7 +41,7 @@ body {
 
 h1, h2, h3, h4,
 .hero__title, .section__title, .card__title,
-.teacher__name, .teacher__highlight-lead, .teacher__subjects-title,
+.teacher__name, .teacher__highlight-lead,
 .legal__title, .legal__heading,
 .price-model__title, .plans__extra-title {
   font-family: var(--font-serif);
@@ -513,33 +513,6 @@ img {
 .teacher__body strong {
   color: var(--color-primary);
   font-weight: 600;
-}
-
-.teacher__subjects {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--color-bg);
-  border-left: 3px solid var(--color-accent);
-  border-radius: 0 var(--radius) var(--radius) 0;
-}
-
-.teacher__subjects-title {
-  font-size: 0.9rem;
-  color: var(--color-accent-dark);
-  letter-spacing: 0.15em;
-  margin-bottom: 0.75rem;
-}
-
-.teacher__subjects dl {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.5rem 1.25rem;
-  font-size: 0.95rem;
-}
-
-.teacher__subjects dt {
-  font-weight: 600;
-  color: var(--color-primary);
 }
 
 /* Plans */
@@ -1434,6 +1407,7 @@ textarea.form__input {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.6rem 0.8rem;
   margin: 0 0 2rem;
   padding: 0;
