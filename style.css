@@ -40,7 +40,7 @@ body {
 }
 
 h1, h2, h3, h4,
-.hero__title, .section__title, .card__title, .flow__title,
+.hero__title, .section__title, .card__title,
 .teacher__name, .teacher__highlight-lead, .teacher__subjects-title,
 .legal__title, .legal__heading,
 .price-model__title, .plans__extra-title {
@@ -540,48 +540,6 @@ img {
 .teacher__subjects dt {
   font-weight: 600;
   color: var(--color-primary);
-}
-
-/* Flow */
-.flow {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-  text-align: left;
-}
-
-.flow__item {
-  padding: 2rem 1.5rem;
-  background: var(--color-surface);
-  border-top: 2px solid var(--color-accent);
-  box-shadow: var(--shadow-sm);
-  border-radius: 0 0 var(--radius) var(--radius);
-}
-
-.section--alt .flow__item {
-  background: var(--color-bg);
-}
-
-.flow__step {
-  font-size: 0.8rem;
-  color: var(--color-accent-dark);
-  letter-spacing: 0.2em;
-  margin-bottom: 0.75rem;
-}
-
-.flow__title {
-  font-size: 1.1rem;
-  color: var(--color-primary);
-  margin-bottom: 0.75rem;
-  font-weight: 600;
-}
-
-.flow__text {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  line-height: 1.8;
 }
 
 /* Plans */
@@ -2080,6 +2038,283 @@ textarea.form__input {
     transform: none;
     transition: none;
   }
+}
+
+/* ===== Teacher special services ===== */
+.teacher__special {
+  margin-top: 2rem;
+}
+
+.teacher__special-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  border-left: 4px solid var(--color-accent);
+  padding-left: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.teacher__special-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  padding: 0;
+}
+
+.teacher__special-item {
+  display: flex;
+  gap: 0.9rem;
+  background: var(--color-sub-soft);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+
+.teacher__special-icon {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-primary);
+}
+
+.teacher__special-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+.teacher__special-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ===== Flow diagram ===== */
+.flow-diagram {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  padding: 0;
+  text-align: left;
+}
+
+.flow-diagram__item {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.1rem 1.25rem;
+  flex: 1 1 0;
+  min-width: 175px;
+  max-width: 220px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.flow-diagram__item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.flow-diagram__item--start {
+  border-color: var(--color-accent);
+  background: linear-gradient(180deg, #fff 0%, #fdf6ec 100%);
+}
+
+.flow-diagram__tag {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.flow-diagram__tag--free {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.flow-diagram__tag--start {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.flow-diagram__tag--monthly {
+  background: var(--color-sub);
+  color: #fff;
+}
+
+.flow-diagram__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-sub-soft);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.flow-diagram__item--start .flow-diagram__icon {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.flow-diagram__num {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-accent-dark);
+  margin-bottom: 0.4rem;
+}
+
+.flow-diagram__title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-primary);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.flow-diagram__time {
+  font-size: 0.78rem;
+  color: var(--color-accent-dark);
+  font-weight: 600;
+  background: rgba(184, 146, 90, 0.1);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.flow-diagram__text {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.flow-diagram__arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  position: relative;
+  width: 28px;
+  height: 28px;
+}
+
+.flow-diagram__arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: translateY(-50%);
+}
+
+.flow-diagram__arrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid var(--color-accent);
+  transform: translateY(-50%);
+}
+
+.flow-diagram__arrow--decision {
+  width: 90px;
+}
+
+.flow-diagram__decision {
+  position: absolute;
+  bottom: calc(50% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--color-accent-dark);
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--color-bg);
+  padding: 0 0.4rem;
+}
+
+@media (max-width: 900px) {
+  .flow-diagram {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .flow-diagram__item {
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+  }
+  .flow-diagram__arrow {
+    width: 28px;
+    height: 32px;
+  }
+  .flow-diagram__arrow::before {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+  .flow-diagram__arrow::after {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    border-top: 8px solid var(--color-accent);
+    border-bottom: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    transform: translateX(-50%);
+  }
+  .flow-diagram__arrow--decision {
+    width: 32px;
+    height: 50px;
+  }
+  .flow-diagram__decision {
+    bottom: auto;
+    top: 50%;
+    left: calc(50% + 18px);
+    transform: translateY(-50%);
+    background: transparent;
+  }
+}
+
+.section--alt .flow-diagram__decision {
+  background: var(--color-surface);
 }
 
 /* ===== Parents section ===== */
