@@ -52,7 +52,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="style.css">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP6NMWTLZE"></script>
@@ -85,10 +85,10 @@
       </button>
       <ul class="nav__menu" id="nav-menu">
         <li><a href="#about">サービス</a></li>
-        <li><a href="#features">特長</a></li>
-        <li><a href="#voice">声</a></li>
+        <li class="nav__menu-secondary"><a href="#features">特長</a></li>
+        <li class="nav__menu-secondary"><a href="#voice">声</a></li>
         <li><a href="#teacher">講師紹介</a></li>
-        <li><a href="#flow">ご利用の流れ</a></li>
+        <li class="nav__menu-secondary"><a href="#flow">ご利用の流れ</a></li>
         <li><a href="#compare">比較</a></li>
         <li><a href="#price">料金</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -153,7 +153,7 @@
     </section>
 
     <section id="about" class="section">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">About</p>
         <h2 class="section__title">未来設計コーチングとは</h2>
         <p class="section__text">
@@ -165,11 +165,17 @@
     </section>
 
     <section id="features" class="section section--alt">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Features</p>
         <h2 class="section__title">6つの特長</h2>
         <div class="cards">
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 10h12a4 4 0 014 4v26a3 3 0 00-3-3H8V10z"/>
+                <path d="M40 10H28a4 4 0 00-4 4v26a3 3 0 013-3h13V10z"/>
+              </svg>
+            </div>
             <div class="card__num">01</div>
             <h3 class="card__title">5教科フル対応</h3>
             <p class="card__text">
@@ -178,6 +184,13 @@
             </p>
           </article>
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="24" cy="24" r="18"/>
+                <circle cx="24" cy="24" r="11"/>
+                <circle cx="24" cy="24" r="4" fill="currentColor"/>
+              </svg>
+            </div>
             <div class="card__num">02</div>
             <h3 class="card__title">完全オーダーメイド</h3>
             <p class="card__text">
@@ -186,6 +199,12 @@
             </p>
           </article>
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 12h32v22H22l-8 8v-8H8z"/>
+                <path d="M16 22h16M16 28h10"/>
+              </svg>
+            </div>
             <div class="card__num">03</div>
             <h3 class="card__title">コーチング型指導</h3>
             <p class="card__text">
@@ -194,6 +213,12 @@
             </p>
           </article>
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="24" cy="17" r="7"/>
+                <path d="M10 40c2-8 8-12 14-12s12 4 14 12"/>
+              </svg>
+            </div>
             <div class="card__num">04</div>
             <h3 class="card__title">代表講師が直接指導</h3>
             <p class="card__text">
@@ -202,6 +227,13 @@
             </p>
           </article>
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 6h18l8 8v28H12z"/>
+                <path d="M30 6v8h8"/>
+                <path d="M18 26v8M24 22v12M30 28v6"/>
+              </svg>
+            </div>
             <div class="card__num">05</div>
             <h3 class="card__title">毎月の学習レポート<br>&amp; 保護者面談</h3>
             <p class="card__text">
@@ -210,6 +242,12 @@
             </p>
           </article>
           <article class="card">
+            <div class="card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M40 14a16 16 0 10-2 22"/>
+                <path d="M40 6v10h-10"/>
+              </svg>
+            </div>
             <div class="card__num">06</div>
             <h3 class="card__title">柔軟な振替制度</h3>
             <p class="card__text">
@@ -222,7 +260,7 @@
     </section>
 
     <section id="voice" class="section">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Voice</p>
         <h2 class="section__title">受講生の声</h2>
         <p class="section__text">
@@ -265,7 +303,7 @@
     </section>
 
     <section id="teacher" class="section">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Teacher</p>
         <h2 class="section__title">講師紹介</h2>
         <div class="teacher__highlight">
@@ -276,6 +314,24 @@
             1,000名以上の指導経験を、一人ひとりにそのまま注ぎ込みます。
           </p>
         </div>
+        <ul class="stats" aria-label="講師の実績">
+          <li class="stats__item">
+            <span class="stats__num">1,000<small>+</small></span>
+            <span class="stats__label">指導経験者数</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__num">5<small>年</small></span>
+            <span class="stats__label">個別指導塾運営</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__num">5<small>教科</small></span>
+            <span class="stats__label">対応科目数</span>
+          </li>
+          <li class="stats__item">
+            <span class="stats__num">100<small>%</small></span>
+            <span class="stats__label">代表直接指導</span>
+          </li>
+        </ul>
         <div class="teacher">
           <div class="teacher__aside">
             <div class="teacher__avatar" aria-hidden="true">小城</div>
@@ -314,7 +370,7 @@
     </section>
 
     <section id="flow" class="section section--alt">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Flow</p>
         <h2 class="section__title">ご利用の流れ</h2>
         <ol class="flow">
@@ -348,7 +404,7 @@
     </section>
 
     <section id="compare" class="section">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Compare</p>
         <h2 class="section__title">他の学習サービスとの違い</h2>
         <p class="section__text">
@@ -359,7 +415,10 @@
             <div role="columnheader"></div>
             <div role="columnheader">個別指導塾</div>
             <div role="columnheader">大手家庭教師</div>
-            <div role="columnheader" class="compare__us">未来設計コーチング</div>
+            <div role="columnheader" class="compare__us">
+              <span class="compare__ribbon" aria-hidden="true">おすすめ</span>
+              未来設計コーチング
+            </div>
           </div>
           <div class="compare__row" role="row">
             <div class="compare__label" role="rowheader">担当講師の固定</div>
@@ -405,7 +464,7 @@
     </section>
 
     <section id="price" class="section">
-      <div class="section__inner">
+      <div class="section__inner" data-reveal>
         <p class="section__eyebrow">Price</p>
         <h2 class="section__title">料金プラン</h2>
         <p class="section__text">
@@ -468,7 +527,8 @@
           <h3 class="price-model__title">月謝のモデルケース</h3>
           <p class="price-model__note">1コマあたりの授業料は上記表の通りです。週1回・月4回受講の場合の月額目安を例示します。</p>
           <ul class="price-model__list">
-            <li class="price-model__item">
+            <li class="price-model__item price-model__item--popular">
+              <span class="price-model__badge" aria-hidden="true">人気プラン</span>
               <p class="price-model__label">中学3年生 / 週1回・90分</p>
               <p class="price-model__calc">¥7,220 × 4回 + 学習サポート費 ¥3,000</p>
               <p class="price-model__total">= <strong>¥31,880</strong><small>/月(税抜)〜</small></p>
@@ -506,7 +566,7 @@
     </section>
 
     <section id="faq" class="section section--alt">
-      <div class="section__inner section__inner--narrow">
+      <div class="section__inner section__inner--narrow" data-reveal>
         <p class="section__eyebrow">FAQ</p>
         <h2 class="section__title">よくあるご質問</h2>
         <div class="faq">
@@ -577,7 +637,7 @@
     </section>
 
     <section id="contact" class="section">
-      <div class="section__inner section__inner--narrow">
+      <div class="section__inner section__inner--narrow" data-reveal>
         <p class="section__eyebrow">Contact</p>
         <h2 class="section__title">お問い合わせ・体験授業のお申し込み</h2>
         <p class="section__text">
@@ -766,6 +826,21 @@
             document.body.classList.remove("no-scroll");
           });
         });
+      }
+
+      var revealEls = document.querySelectorAll("[data-reveal]");
+      if (revealEls.length && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add("is-visible"); });
       }
 
       var form = document.getElementById("contact-form");
