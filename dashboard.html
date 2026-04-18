@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,follow">
+  <title>成績・授業進捗管理 | 未来設計コーチング</title>
+  <meta name="description" content="生徒ごとの成績と授業進捗を入力・確認できる管理ページです。データはお使いのブラウザ内に保存されます。">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">本文へスキップ</a>
+  <header class="header">
+    <nav class="nav">
+      <a href="./" class="nav__logo">
+        <img src="favicon.svg" alt="" width="28" height="28" class="nav__logo-img">
+        <span>未来設計コーチング</span>
+      </a>
+      <ul class="nav__menu">
+        <li><a href="./#about">サービス</a></li>
+        <li><a href="./#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="dashboard">
+    <div class="dashboard__inner">
+      <p class="section__eyebrow">Dashboard</p>
+      <h1 class="legal__title">成績・授業進捗管理</h1>
+      <p class="legal__text">
+        生徒ごとに成績と授業進捗を登録・確認できます。入力されたデータはお使いのブラウザ（localStorage）に保存され、サーバーへは送信されません。
+        別の端末やブラウザで利用する場合は「データ書き出し」で保存し、「データ取り込み」で復元してください。
+      </p>
+
+      <section class="dash-card" aria-labelledby="data-io-title">
+        <h2 id="data-io-title" class="dash-card__title">データの保存・復元</h2>
+        <div class="dash-actions">
+          <button type="button" class="dash-btn" id="export-btn">データ書き出し（JSON）</button>
+          <label class="dash-btn dash-btn--ghost">
+            データ取り込み
+            <input type="file" id="import-file" accept="application/json,.json" hidden>
+          </label>
+          <button type="button" class="dash-btn dash-btn--danger" id="reset-btn">全データ削除</button>
+        </div>
+        <p class="dash-note" id="io-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="dash-card" aria-labelledby="student-title">
+        <h2 id="student-title" class="dash-card__title">生徒の登録</h2>
+        <form class="dash-form" id="student-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="student-name">氏名</label>
+            <input type="text" id="student-name" required maxlength="40" placeholder="例: 山田 太郎">
+          </div>
+          <div class="dash-field">
+            <label for="student-grade">学年</label>
+            <select id="student-grade" required>
+              <option value="">選択してください</option>
+              <option>中1</option><option>中2</option><option>中3</option>
+              <option>高1</option><option>高2</option><option>高3</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="dash-field">
+            <label for="student-goal">目標・志望校（任意）</label>
+            <input type="text" id="student-goal" maxlength="80" placeholder="例: 地元公立トップ校合格">
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">生徒を追加</button>
+          </div>
+        </form>
+
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="student-table">
+            <thead>
+              <tr><th>氏名</th><th>学年</th><th>目標</th><th>成績件数</th><th>授業件数</th><th>操作</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="student-empty" hidden>まだ生徒が登録されていません。</p>
+        </div>
+      </section>
+
+      <section class="dash-card" aria-labelledby="grade-title">
+        <h2 id="grade-title" class="dash-card__title">成績の入力</h2>
+        <form class="dash-form" id="grade-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="grade-student">生徒</label>
+            <select id="grade-student" required></select>
+          </div>
+          <div class="dash-field">
+            <label for="grade-date">実施日</label>
+            <input type="date" id="grade-date" required>
+          </div>
+          <div class="dash-field">
+            <label for="grade-subject">科目</label>
+            <select id="grade-subject" required>
+              <option value="">選択</option>
+              <option>英語</option><option>数学</option><option>国語</option>
+              <option>理科</option><option>社会</option><option>その他</option>
+            </select>
+          </div>
+          <div class="dash-field">
+            <label for="grade-exam">テスト名</label>
+            <input type="text" id="grade-exam" required maxlength="40" placeholder="例: 1学期中間テスト">
+          </div>
+          <div class="dash-field">
+            <label for="grade-score">得点</label>
+            <input type="number" id="grade-score" required min="0" max="1000" step="0.1">
+          </div>
+          <div class="dash-field">
+            <label for="grade-max">満点</label>
+            <input type="number" id="grade-max" required min="1" max="1000" step="0.1" value="100">
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="grade-memo">メモ（任意）</label>
+            <input type="text" id="grade-memo" maxlength="120" placeholder="例: 長文読解で失点。単語強化が必要。">
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">成績を記録</button>
+          </div>
+        </form>
+
+        <div class="dash-filter">
+          <label for="grade-filter">表示する生徒</label>
+          <select id="grade-filter"><option value="">全員</option></select>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="grade-table">
+            <thead>
+              <tr><th>日付</th><th>生徒</th><th>科目</th><th>テスト</th><th>得点</th><th>割合</th><th>メモ</th><th>操作</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="grade-empty" hidden>成績の記録はまだありません。</p>
+        </div>
+      </section>
+
+      <section class="dash-card" aria-labelledby="lesson-title">
+        <h2 id="lesson-title" class="dash-card__title">授業進捗の入力</h2>
+        <form class="dash-form" id="lesson-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="lesson-student">生徒</label>
+            <select id="lesson-student" required></select>
+          </div>
+          <div class="dash-field">
+            <label for="lesson-date">授業日</label>
+            <input type="date" id="lesson-date" required>
+          </div>
+          <div class="dash-field">
+            <label for="lesson-subject">科目</label>
+            <select id="lesson-subject" required>
+              <option value="">選択</option>
+              <option>英語</option><option>数学</option><option>国語</option>
+              <option>理科</option><option>社会</option><option>その他</option>
+            </select>
+          </div>
+          <div class="dash-field">
+            <label for="lesson-topic">単元・内容</label>
+            <input type="text" id="lesson-topic" required maxlength="80" placeholder="例: 二次関数のグラフ">
+          </div>
+          <div class="dash-field">
+            <label for="lesson-progress">進捗</label>
+            <select id="lesson-progress" required>
+              <option value="">選択</option>
+              <option>導入</option><option>理解中</option><option>定着</option>
+              <option>応用</option><option>復習待ち</option>
+            </select>
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="lesson-homework">宿題（任意）</label>
+            <input type="text" id="lesson-homework" maxlength="120" placeholder="例: 問題集 p.42〜45">
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="lesson-note">振り返り（任意）</label>
+            <textarea id="lesson-note" rows="2" maxlength="400" placeholder="授業の様子・次回の重点など"></textarea>
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">授業を記録</button>
+          </div>
+        </form>
+
+        <div class="dash-filter">
+          <label for="lesson-filter">表示する生徒</label>
+          <select id="lesson-filter"><option value="">全員</option></select>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="lesson-table">
+            <thead>
+              <tr><th>日付</th><th>生徒</th><th>科目</th><th>単元</th><th>進捗</th><th>宿題</th><th>振り返り</th><th>操作</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="lesson-empty" hidden>授業の記録はまだありません。</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__logo">未来設計コーチング</p>
+      <p class="footer__text">中学生・高校生のためのオンライン家庭教師</p>
+      <ul class="footer__links">
+        <li><a href="./">トップ</a></li>
+        <li><a href="privacy.html">プライバシーポリシー</a></li>
+        <li><a href="terms.html">利用規約</a></li>
+        <li><a href="tokusho.html">特定商取引法に基づく表記</a></li>
+      </ul>
+      <p class="footer__copy">&copy; 2026 未来設計コーチング. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var STORAGE_KEY = "msc-dashboard-v1";
+
+      var state = load();
+
+      function load() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return { students: [], grades: [], lessons: [] };
+          var data = JSON.parse(raw);
+          return {
+            students: Array.isArray(data.students) ? data.students : [],
+            grades: Array.isArray(data.grades) ? data.grades : [],
+            lessons: Array.isArray(data.lessons) ? data.lessons : []
+          };
+        } catch (e) {
+          return { students: [], grades: [], lessons: [] };
+        }
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+          setStatus("保存に失敗しました: " + e.message, true);
+        }
+      }
+
+      function uid() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      }
+
+      function today() {
+        var d = new Date();
+        var m = String(d.getMonth() + 1).padStart(2, "0");
+        var day = String(d.getDate()).padStart(2, "0");
+        return d.getFullYear() + "-" + m + "-" + day;
+      }
+
+      function escapeHtml(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+
+      function setStatus(msg, isError) {
+        var el = document.getElementById("io-status");
+        el.textContent = msg;
+        el.classList.toggle("dash-note--error", !!isError);
+        if (msg) {
+          setTimeout(function () { if (el.textContent === msg) el.textContent = ""; }, 4000);
+        }
+      }
+
+      function findStudent(id) {
+        for (var i = 0; i < state.students.length; i++) {
+          if (state.students[i].id === id) return state.students[i];
+        }
+        return null;
+      }
+
+      function renderStudentSelects() {
+        var selects = [
+          document.getElementById("grade-student"),
+          document.getElementById("lesson-student"),
+          document.getElementById("grade-filter"),
+          document.getElementById("lesson-filter")
+        ];
+        selects.forEach(function (sel) {
+          var prev = sel.value;
+          var isFilter = sel.id.endsWith("-filter");
+          sel.innerHTML = "";
+          if (isFilter) {
+            var allOpt = document.createElement("option");
+            allOpt.value = "";
+            allOpt.textContent = "全員";
+            sel.appendChild(allOpt);
+          } else {
+            var placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = state.students.length ? "選択してください" : "先に生徒を登録してください";
+            sel.appendChild(placeholder);
+          }
+          state.students.forEach(function (s) {
+            var o = document.createElement("option");
+            o.value = s.id;
+            o.textContent = s.name + "（" + s.grade + "）";
+            sel.appendChild(o);
+          });
+          if (prev && findStudent(prev)) sel.value = prev;
+        });
+      }
+
+      function renderStudents() {
+        var tbody = document.querySelector("#student-table tbody");
+        var empty = document.getElementById("student-empty");
+        tbody.innerHTML = "";
+        if (!state.students.length) {
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        state.students.forEach(function (s) {
+          var gCount = state.grades.filter(function (g) { return g.studentId === s.id; }).length;
+          var lCount = state.lessons.filter(function (l) { return l.studentId === s.id; }).length;
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(s.name) + "</td>" +
+            "<td>" + escapeHtml(s.grade) + "</td>" +
+            "<td>" + escapeHtml(s.goal || "—") + "</td>" +
+            "<td>" + gCount + "</td>" +
+            "<td>" + lCount + "</td>" +
+            '<td><button type="button" class="dash-link" data-remove-student="' + s.id + '">削除</button></td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderGrades() {
+        var filter = document.getElementById("grade-filter").value;
+        var tbody = document.querySelector("#grade-table tbody");
+        var empty = document.getElementById("grade-empty");
+        tbody.innerHTML = "";
+        var rows = state.grades.slice().sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        });
+        if (filter) rows = rows.filter(function (g) { return g.studentId === filter; });
+        if (!rows.length) {
+          empty.hidden = false;
+          empty.textContent = filter
+            ? "この生徒の成績記録はまだありません。"
+            : "成績の記録はまだありません。";
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (g) {
+          var s = findStudent(g.studentId);
+          var pct = g.max > 0 ? ((g.score / g.max) * 100).toFixed(1) + "%" : "—";
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(g.date) + "</td>" +
+            "<td>" + escapeHtml(s ? s.name : "(削除済)") + "</td>" +
+            "<td>" + escapeHtml(g.subject) + "</td>" +
+            "<td>" + escapeHtml(g.exam) + "</td>" +
+            "<td>" + escapeHtml(g.score + " / " + g.max) + "</td>" +
+            "<td>" + pct + "</td>" +
+            "<td>" + escapeHtml(g.memo || "") + "</td>" +
+            '<td><button type="button" class="dash-link" data-remove-grade="' + g.id + '">削除</button></td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderLessons() {
+        var filter = document.getElementById("lesson-filter").value;
+        var tbody = document.querySelector("#lesson-table tbody");
+        var empty = document.getElementById("lesson-empty");
+        tbody.innerHTML = "";
+        var rows = state.lessons.slice().sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        });
+        if (filter) rows = rows.filter(function (l) { return l.studentId === filter; });
+        if (!rows.length) {
+          empty.hidden = false;
+          empty.textContent = filter
+            ? "この生徒の授業記録はまだありません。"
+            : "授業の記録はまだありません。";
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (l) {
+          var s = findStudent(l.studentId);
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(l.date) + "</td>" +
+            "<td>" + escapeHtml(s ? s.name : "(削除済)") + "</td>" +
+            "<td>" + escapeHtml(l.subject) + "</td>" +
+            "<td>" + escapeHtml(l.topic) + "</td>" +
+            '<td><span class="dash-chip dash-chip--' + chipClass(l.progress) + '">' + escapeHtml(l.progress) + "</span></td>" +
+            "<td>" + escapeHtml(l.homework || "") + "</td>" +
+            "<td>" + escapeHtml(l.note || "") + "</td>" +
+            '<td><button type="button" class="dash-link" data-remove-lesson="' + l.id + '">削除</button></td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function chipClass(progress) {
+        switch (progress) {
+          case "導入": return "intro";
+          case "理解中": return "learning";
+          case "定着": return "fixed";
+          case "応用": return "applied";
+          case "復習待ち": return "review";
+          default: return "default";
+        }
+      }
+
+      function renderAll() {
+        renderStudentSelects();
+        renderStudents();
+        renderGrades();
+        renderLessons();
+      }
+
+      document.getElementById("student-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var name = document.getElementById("student-name").value.trim();
+        var grade = document.getElementById("student-grade").value;
+        var goal = document.getElementById("student-goal").value.trim();
+        if (!name || !grade) return;
+        state.students.push({ id: uid(), name: name, grade: grade, goal: goal });
+        save();
+        this.reset();
+        renderAll();
+      });
+
+      document.getElementById("grade-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var studentId = document.getElementById("grade-student").value;
+        if (!studentId) {
+          setStatus("先に生徒を登録してください。", true);
+          return;
+        }
+        var score = parseFloat(document.getElementById("grade-score").value);
+        var max = parseFloat(document.getElementById("grade-max").value);
+        if (!(max > 0) || score < 0 || score > max) {
+          setStatus("得点と満点の値を確認してください（0〜満点の範囲）。", true);
+          return;
+        }
+        state.grades.push({
+          id: uid(),
+          studentId: studentId,
+          date: document.getElementById("grade-date").value,
+          subject: document.getElementById("grade-subject").value,
+          exam: document.getElementById("grade-exam").value.trim(),
+          score: score,
+          max: max,
+          memo: document.getElementById("grade-memo").value.trim()
+        });
+        save();
+        this.reset();
+        document.getElementById("grade-date").value = today();
+        document.getElementById("grade-max").value = 100;
+        renderAll();
+      });
+
+      document.getElementById("lesson-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var studentId = document.getElementById("lesson-student").value;
+        if (!studentId) {
+          setStatus("先に生徒を登録してください。", true);
+          return;
+        }
+        state.lessons.push({
+          id: uid(),
+          studentId: studentId,
+          date: document.getElementById("lesson-date").value,
+          subject: document.getElementById("lesson-subject").value,
+          topic: document.getElementById("lesson-topic").value.trim(),
+          progress: document.getElementById("lesson-progress").value,
+          homework: document.getElementById("lesson-homework").value.trim(),
+          note: document.getElementById("lesson-note").value.trim()
+        });
+        save();
+        this.reset();
+        document.getElementById("lesson-date").value = today();
+        renderAll();
+      });
+
+      document.addEventListener("click", function (e) {
+        var t = e.target;
+        if (!(t instanceof HTMLElement)) return;
+        var sid = t.getAttribute("data-remove-student");
+        if (sid) {
+          if (!confirm("この生徒を削除します。紐づく成績・授業記録も削除されます。よろしいですか？")) return;
+          state.students = state.students.filter(function (s) { return s.id !== sid; });
+          state.grades = state.grades.filter(function (g) { return g.studentId !== sid; });
+          state.lessons = state.lessons.filter(function (l) { return l.studentId !== sid; });
+          save();
+          renderAll();
+          return;
+        }
+        var gid = t.getAttribute("data-remove-grade");
+        if (gid) {
+          state.grades = state.grades.filter(function (g) { return g.id !== gid; });
+          save();
+          renderAll();
+          return;
+        }
+        var lid = t.getAttribute("data-remove-lesson");
+        if (lid) {
+          state.lessons = state.lessons.filter(function (l) { return l.id !== lid; });
+          save();
+          renderAll();
+          return;
+        }
+      });
+
+      document.getElementById("grade-filter").addEventListener("change", renderGrades);
+      document.getElementById("lesson-filter").addEventListener("change", renderLessons);
+
+      document.getElementById("export-btn").addEventListener("click", function () {
+        var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "mirai-dashboard-" + today() + ".json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setStatus("データを書き出しました。");
+      });
+
+      document.getElementById("import-file").addEventListener("change", function (e) {
+        var file = e.target.files && e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(reader.result);
+            if (!data || !Array.isArray(data.students) || !Array.isArray(data.grades) || !Array.isArray(data.lessons)) {
+              throw new Error("形式が正しくありません。");
+            }
+            if (!confirm("現在のデータを取り込んだ内容で置き換えます。よろしいですか？")) return;
+            state = {
+              students: data.students,
+              grades: data.grades,
+              lessons: data.lessons
+            };
+            save();
+            renderAll();
+            setStatus("データを取り込みました。");
+          } catch (err) {
+            setStatus("取り込みに失敗しました: " + err.message, true);
+          }
+        };
+        reader.readAsText(file);
+        e.target.value = "";
+      });
+
+      document.getElementById("reset-btn").addEventListener("click", function () {
+        if (!confirm("保存されている全データを削除します。よろしいですか？")) return;
+        state = { students: [], grades: [], lessons: [] };
+        save();
+        renderAll();
+        setStatus("全データを削除しました。");
+      });
+
+      document.getElementById("grade-date").value = today();
+      document.getElementById("lesson-date").value = today();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
