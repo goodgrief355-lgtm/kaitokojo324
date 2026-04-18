@@ -1415,3 +1415,327 @@ textarea.form__input {
     padding: 0.75rem 1rem;
   }
 }
+
+/* ===== Hero badges ===== */
+.hero__badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.8rem;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.hero__badges li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.hero__badge-check {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* ===== Teacher highlight ===== */
+.teacher__highlight {
+  max-width: 820px;
+  margin: 2rem auto 2.5rem;
+  padding: 1.75rem 2rem;
+  background: linear-gradient(135deg, rgba(184, 146, 90, 0.1), rgba(31, 58, 95, 0.06));
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.teacher__highlight-lead {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.teacher__highlight-text {
+  font-size: 0.98rem;
+  line-height: 1.9;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.teacher__highlight-text strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ===== Compare table ===== */
+.compare {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.15fr;
+  gap: 0;
+  margin-top: 2.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-align: left;
+}
+
+.compare__head,
+.compare__row {
+  display: contents;
+}
+
+.compare__head > *,
+.compare__row > * {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.compare__head > * {
+  background: var(--color-bg);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  text-align: center;
+  align-items: center;
+}
+
+.compare__head .compare__us {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.compare__label {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  background: var(--color-bg);
+}
+
+.compare__cell {
+  text-align: center;
+  align-items: center;
+}
+
+.compare__cell.compare__us {
+  background: rgba(184, 146, 90, 0.08);
+}
+
+.compare__mark {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.compare__mark--best { color: var(--color-accent-dark); }
+.compare__mark--good { color: var(--color-primary); }
+.compare__mark--mid  { color: #a0a69f; }
+.compare__mark--bad  { color: #b5524a; }
+
+.compare__note {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.compare__row:last-child > * {
+  border-bottom: 0;
+}
+
+.compare-note,
+.compare__note-global {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.compare + .compare__note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* ===== Price model cases ===== */
+.price-model {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.price-model__title {
+  font-size: 1.15rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.price-model__note {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin: 0 0 1.5rem;
+}
+
+.price-model__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.price-model__item {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.price-model__label {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.price-model__calc {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+}
+
+.price-model__total {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.price-model__total strong {
+  font-size: 1.5rem;
+  color: var(--color-accent-dark);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.price-model__total small {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-left: 0.25rem;
+}
+
+/* ===== SNS links ===== */
+.sns {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.sns__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.sns__link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.sns__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sns__label {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Compare table - mobile ===== */
+@media (max-width: 768px) {
+  .compare {
+    display: block;
+    border: 0;
+    background: transparent;
+  }
+  .compare__head {
+    display: none;
+  }
+  .compare__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .compare__row > * {
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .compare__label {
+    grid-column: 1 / -1;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.85rem 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .compare__cell {
+    text-align: left;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .compare__cell::before {
+    content: attr(data-label);
+    display: block;
+    width: 100%;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .compare__mark {
+    font-size: 1.2rem;
+  }
+  .compare__cell.compare__us {
+    background: rgba(184, 146, 90, 0.1);
+  }
+}
