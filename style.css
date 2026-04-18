@@ -2251,20 +2251,51 @@ textarea.form__input {
 }
 
 .flow-diagram__arrow--decision {
-  width: 90px;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.flow-diagram__arrow--decision::before {
+  top: auto;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 38px;
+  transform: translateX(-50%);
+}
+
+.flow-diagram__arrow--decision::after {
+  top: auto;
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  border-top: 8px solid var(--color-accent);
+  border-bottom: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  transform: translateX(-50%);
 }
 
 .flow-diagram__decision {
-  position: absolute;
-  bottom: calc(50% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.72rem;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  font-size: 0.78rem;
   color: var(--color-accent-dark);
   font-weight: 600;
   white-space: nowrap;
   background: var(--color-bg);
-  padding: 0 0.4rem;
+  padding: 0.15rem 0.7rem;
+  border: 1px solid rgba(184, 146, 90, 0.3);
+  border-radius: 999px;
+  margin-bottom: 6px;
 }
 
 @media (max-width: 900px) {
@@ -2301,15 +2332,21 @@ textarea.form__input {
     transform: translateX(-50%);
   }
   .flow-diagram__arrow--decision {
-    width: 32px;
-    height: 50px;
+    flex: 0 0 auto;
+    width: auto;
+    height: auto;
+    margin: 0.25rem 0;
+  }
+  .flow-diagram__arrow--decision::before {
+    height: 32px;
   }
   .flow-diagram__decision {
-    bottom: auto;
-    top: 50%;
-    left: calc(50% + 18px);
-    transform: translateY(-50%);
-    background: transparent;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    background: var(--color-bg);
+    margin-bottom: 4px;
   }
 }
 
