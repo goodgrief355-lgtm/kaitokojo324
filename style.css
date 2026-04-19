@@ -686,6 +686,21 @@ img {
   font-weight: 600;
 }
 
+.faq__category {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 2rem 0 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--color-accent);
+}
+
+.faq__category:first-child {
+  margin-top: 0.5rem;
+}
+
 /* Form */
 .form {
   text-align: left;
