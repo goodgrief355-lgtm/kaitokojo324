@@ -42,6 +42,7 @@
         <button type="button" class="dash-tab" role="tab" id="tab-grades" data-tab="grades" aria-selected="false" aria-controls="panel-grades">成績</button>
         <button type="button" class="dash-tab" role="tab" id="tab-lessons" data-tab="lessons" aria-selected="false" aria-controls="panel-lessons">授業</button>
         <button type="button" class="dash-tab" role="tab" id="tab-invoices" data-tab="invoices" aria-selected="false" aria-controls="panel-invoices">請求</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-reports" data-tab="reports" aria-selected="false" aria-controls="panel-reports">内申点</button>
         <button type="button" class="dash-tab" role="tab" id="tab-data" data-tab="data" aria-selected="false" aria-controls="panel-data">データ</button>
       </nav>
 
@@ -200,8 +201,10 @@
             <label for="grade-subject">科目</label>
             <select id="grade-subject" required>
               <option value="">選択</option>
-              <option>英語</option><option>数学</option><option>国語</option>
-              <option>理科</option><option>社会</option><option>その他</option>
+              <option>国語</option><option>数学</option><option>英語</option>
+              <option>理科</option><option>社会</option>
+              <option>音楽</option><option>美術</option><option>保健体育</option><option>技術・家庭</option>
+              <option>その他</option>
             </select>
           </div>
           <div class="dash-field">
@@ -238,6 +241,50 @@
           </table>
           <p class="dash-empty" id="grade-empty" hidden>成績の記録はまだありません。</p>
         </div>
+      </section>
+
+      <section class="dash-card" aria-labelledby="grade-bulk-title">
+        <h2 id="grade-bulk-title" class="dash-card__title">9教科を一括登録</h2>
+        <p class="dash-note">同じテストの9教科分の点数をまとめて記録できます。空欄の科目はスキップされます。</p>
+        <form class="dash-form" id="grade-bulk-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="grade-bulk-student">生徒</label>
+            <select id="grade-bulk-student" required></select>
+          </div>
+          <div class="dash-field">
+            <label for="grade-bulk-date">実施日</label>
+            <input type="date" id="grade-bulk-date" required>
+          </div>
+          <div class="dash-field">
+            <label for="grade-bulk-exam">テスト名</label>
+            <input type="text" id="grade-bulk-exam" required maxlength="40" placeholder="例: 1学期期末テスト">
+          </div>
+          <div class="dash-field">
+            <label for="grade-bulk-max">満点（共通）</label>
+            <input type="number" id="grade-bulk-max" required min="1" max="1000" step="0.1" value="100">
+          </div>
+          <div class="dash-field dash-field--wide">
+            <p class="dash-subhead">各教科の得点（空欄はスキップ）</p>
+            <div class="dash-grid-9">
+              <label class="dash-mini-field"><span>国語</span><input type="number" data-bulk-subject="国語" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>数学</span><input type="number" data-bulk-subject="数学" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>英語</span><input type="number" data-bulk-subject="英語" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>理科</span><input type="number" data-bulk-subject="理科" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>社会</span><input type="number" data-bulk-subject="社会" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>音楽</span><input type="number" data-bulk-subject="音楽" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>美術</span><input type="number" data-bulk-subject="美術" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>保健体育</span><input type="number" data-bulk-subject="保健体育" min="0" max="1000" step="0.1" placeholder="—"></label>
+              <label class="dash-mini-field"><span>技術・家庭</span><input type="number" data-bulk-subject="技術・家庭" min="0" max="1000" step="0.1" placeholder="—"></label>
+            </div>
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="grade-bulk-memo">メモ（任意・全教科共通）</label>
+            <input type="text" id="grade-bulk-memo" maxlength="120" placeholder="例: 範囲は教科書〇〇まで">
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">入力した教科を一括記録</button>
+          </div>
+        </form>
       </section>
       </div>
 
@@ -324,16 +371,12 @@
             </select>
           </div>
           <div class="dash-field">
-            <label for="invoice-unit-price">単価（円）</label>
-            <input type="number" id="invoice-unit-price" required min="0" max="1000000" step="100" value="0">
+            <label for="invoice-amount">請求金額（円） <span class="dash-note-inline">生徒の月謝が自動投入されます</span></label>
+            <input type="number" id="invoice-amount" required min="0" max="10000000" step="1" value="0">
           </div>
           <div class="dash-field">
-            <label for="invoice-count">授業回数 <span class="dash-note-inline" id="invoice-count-hint">（対象月の記録から自動）</span></label>
+            <label for="invoice-count">授業回数 <span class="dash-note-inline" id="invoice-count-hint">（対象月の記録から自動・参考値）</span></label>
             <input type="number" id="invoice-count" required min="0" max="200" step="1" value="0">
-          </div>
-          <div class="dash-field">
-            <label for="invoice-amount-preview">金額（自動計算）</label>
-            <input type="text" id="invoice-amount-preview" readonly value="¥0">
           </div>
           <div class="dash-field">
             <label for="invoice-issued">発行日</label>
@@ -375,6 +418,81 @@
             <tbody></tbody>
           </table>
           <p class="dash-empty" id="invoice-empty" hidden>請求の記録はまだありません。</p>
+        </div>
+      </section>
+      </div>
+
+      <div class="dash-panel" id="panel-reports" role="tabpanel" aria-labelledby="tab-reports" data-panel="reports" hidden>
+      <section class="dash-card" aria-labelledby="report-title">
+        <h2 id="report-title" class="dash-card__title">内申点の登録</h2>
+        <p class="dash-note">学期ごとの9教科×5段階評価を記録します。合計（最大45）と平均が自動算出されます。</p>
+        <form class="dash-form" id="report-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="report-student">生徒</label>
+            <select id="report-student" required></select>
+          </div>
+          <div class="dash-field">
+            <label for="report-year">年度</label>
+            <input type="number" id="report-year" required min="2000" max="2100" step="1">
+          </div>
+          <div class="dash-field">
+            <label for="report-term">時期</label>
+            <select id="report-term" required>
+              <option value="1学期">1学期</option>
+              <option value="2学期">2学期</option>
+              <option value="3学期">3学期</option>
+              <option value="前期">前期</option>
+              <option value="後期">後期</option>
+              <option value="学年末">学年末</option>
+            </select>
+          </div>
+          <div class="dash-field">
+            <label for="report-grade">学年（時点）</label>
+            <select id="report-grade" required>
+              <option>中学1年</option><option>中学2年</option><option>中学3年</option>
+              <option>高校1年</option><option>高校2年</option><option>高校3年</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="dash-field dash-field--wide">
+            <p class="dash-subhead">9教科の評価（1〜5・空欄は未評価）</p>
+            <div class="dash-grid-9">
+              <label class="dash-mini-field"><span>国語</span><select data-report-subject="国語"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>数学</span><select data-report-subject="数学"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>英語</span><select data-report-subject="英語"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>理科</span><select data-report-subject="理科"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>社会</span><select data-report-subject="社会"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>音楽</span><select data-report-subject="音楽"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>美術</span><select data-report-subject="美術"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>保健体育</span><select data-report-subject="保健体育"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+              <label class="dash-mini-field"><span>技術・家庭</span><select data-report-subject="技術・家庭"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+            </div>
+          </div>
+          <div class="dash-field">
+            <label for="report-total-preview">合計 / 平均（自動）</label>
+            <input type="text" id="report-total-preview" readonly value="—">
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="report-note">メモ（任意）</label>
+            <input type="text" id="report-note" maxlength="160" placeholder="例: 提出物が評価に直結。次は4を狙う。">
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">内申点を記録</button>
+          </div>
+        </form>
+
+        <div class="dash-filter">
+          <label for="report-filter">表示する生徒</label>
+          <select id="report-filter"><option value="">全員</option></select>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="report-table">
+            <thead>
+              <tr><th>年度</th><th>時期</th><th>学年</th><th>生徒</th><th>国</th><th>数</th><th>英</th><th>理</th><th>社</th><th>音</th><th>美</th><th>保体</th><th>技家</th><th>合計</th><th>平均</th><th>メモ</th><th>操作</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="report-empty" hidden>内申点の記録はまだありません。</p>
         </div>
       </section>
       </div>
@@ -427,7 +545,8 @@
             students: students,
             grades: Array.isArray(data.grades) ? data.grades : [],
             lessons: Array.isArray(data.lessons) ? data.lessons : [],
-            invoices: Array.isArray(data.invoices) ? data.invoices : []
+            invoices: Array.isArray(data.invoices) ? data.invoices : [],
+            reports: Array.isArray(data.reports) ? data.reports : []
           };
         } catch (e) {
           return emptyState();
@@ -435,7 +554,7 @@
       }
 
       function emptyState() {
-        return { students: [], grades: [], lessons: [], invoices: [] };
+        return { students: [], grades: [], lessons: [], invoices: [], reports: [] };
       }
 
       function migrateStudent(s) {
@@ -557,11 +676,14 @@
       function renderStudentSelects() {
         var targets = [
           { el: document.getElementById("grade-student"),          filter: false },
+          { el: document.getElementById("grade-bulk-student"),     filter: false },
           { el: document.getElementById("lesson-student"),         filter: false },
           { el: document.getElementById("invoice-student"),        filter: false },
+          { el: document.getElementById("report-student"),         filter: false },
           { el: document.getElementById("grade-filter"),           filter: true  },
           { el: document.getElementById("lesson-filter"),          filter: true  },
-          { el: document.getElementById("invoice-filter-student"), filter: true  }
+          { el: document.getElementById("invoice-filter-student"), filter: true  },
+          { el: document.getElementById("report-filter"),          filter: true  }
         ];
         targets.forEach(function (t) {
           var sel = t.el;
@@ -754,6 +876,84 @@
         });
       }
 
+      var REPORT_SUBJECTS = ["国語","数学","英語","理科","社会","音楽","美術","保健体育","技術・家庭"];
+
+      function reportTotal(r) {
+        var t = 0;
+        for (var i = 0; i < REPORT_SUBJECTS.length; i++) {
+          var v = r.subjects ? r.subjects[REPORT_SUBJECTS[i]] : null;
+          if (typeof v === "number") t += v;
+        }
+        return t;
+      }
+
+      function reportCount(r) {
+        var c = 0;
+        for (var i = 0; i < REPORT_SUBJECTS.length; i++) {
+          var v = r.subjects ? r.subjects[REPORT_SUBJECTS[i]] : null;
+          if (typeof v === "number") c++;
+        }
+        return c;
+      }
+
+      function reportAverage(r) {
+        var c = reportCount(r);
+        if (!c) return null;
+        return Math.round((reportTotal(r) / c) * 10) / 10;
+      }
+
+      function renderReports() {
+        var filter = document.getElementById("report-filter").value;
+        var tbody = document.querySelector("#report-table tbody");
+        var empty = document.getElementById("report-empty");
+        tbody.innerHTML = "";
+        var rows = state.reports.slice().sort(function (a, b) {
+          if (a.year !== b.year) return b.year - a.year;
+          return (b.term || "").localeCompare(a.term || "");
+        });
+        if (filter) rows = rows.filter(function (r) { return r.studentId === filter; });
+        if (!rows.length) {
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (r) {
+          var s = findStudent(r.studentId);
+          var name = s ? s.name : "（削除済み）";
+          var cells = REPORT_SUBJECTS.map(function (subj) {
+            var v = r.subjects && r.subjects[subj];
+            return "<td>" + (typeof v === "number" ? v : "—") + "</td>";
+          }).join("");
+          var total = reportTotal(r);
+          var avg = reportAverage(r);
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(String(r.year)) + "</td>" +
+            "<td>" + escapeHtml(r.term || "") + "</td>" +
+            "<td>" + escapeHtml(r.studentGrade || "") + "</td>" +
+            "<td>" + escapeHtml(name) + "</td>" +
+            cells +
+            "<td><strong>" + total + "</strong>/45</td>" +
+            "<td>" + (avg !== null ? avg.toFixed(1) : "—") + "</td>" +
+            "<td>" + escapeHtml(r.note || "") + "</td>" +
+            '<td><button type="button" class="dash-link" data-remove-report="' + r.id + '">削除</button></td>';
+          tbody.appendChild(tr);
+        });
+      }
+
+      function updateReportTotalPreview() {
+        var subs = {};
+        document.querySelectorAll("[data-report-subject]").forEach(function (sel) {
+          if (sel.value) subs[sel.dataset.reportSubject] = parseInt(sel.value, 10);
+        });
+        var temp = { subjects: subs };
+        var total = reportTotal(temp);
+        var c = reportCount(temp);
+        var avg = reportAverage(temp);
+        var preview = c ? (total + "/45（" + c + "教科・平均 " + (avg !== null ? avg.toFixed(1) : "—") + "）") : "—";
+        document.getElementById("report-total-preview").value = preview;
+      }
+
       function renderSummary() {
         var now = new Date();
         var y = now.getFullYear();
@@ -854,6 +1054,7 @@
         renderGrades();
         renderLessons();
         renderInvoices();
+        renderReports();
       }
 
       function activateTab(name) {
@@ -982,6 +1183,104 @@
         renderAll();
       });
 
+      document.getElementById("grade-bulk-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var studentId = document.getElementById("grade-bulk-student").value;
+        if (!studentId) {
+          setStatus("先に生徒を登録してください。", true);
+          return;
+        }
+        var date = document.getElementById("grade-bulk-date").value;
+        var exam = document.getElementById("grade-bulk-exam").value.trim();
+        var max = parseFloat(document.getElementById("grade-bulk-max").value);
+        var memo = document.getElementById("grade-bulk-memo").value.trim();
+        if (!date || !exam || !(max > 0)) {
+          setStatus("実施日・テスト名・満点を確認してください。", true);
+          return;
+        }
+        var inputs = this.querySelectorAll("[data-bulk-subject]");
+        var added = 0;
+        for (var i = 0; i < inputs.length; i++) {
+          var raw = inputs[i].value;
+          if (raw === "" || raw === null) continue;
+          var score = parseFloat(raw);
+          if (isNaN(score) || score < 0 || score > max) {
+            setStatus(inputs[i].dataset.bulkSubject + " の得点が不正です（0〜満点）。", true);
+            return;
+          }
+          state.grades.push({
+            id: uid(),
+            studentId: studentId,
+            date: date,
+            subject: inputs[i].dataset.bulkSubject,
+            exam: exam,
+            score: score,
+            max: max,
+            memo: memo
+          });
+          added++;
+        }
+        if (added === 0) {
+          setStatus("少なくとも1教科の得点を入力してください。", true);
+          return;
+        }
+        save();
+        this.reset();
+        document.getElementById("grade-bulk-date").value = today();
+        document.getElementById("grade-bulk-max").value = 100;
+        setStatus(added + "教科分の成績を一括記録しました。");
+        renderAll();
+      });
+
+      document.querySelectorAll("[data-report-subject]").forEach(function (sel) {
+        sel.addEventListener("change", updateReportTotalPreview);
+      });
+
+      document.getElementById("report-filter").addEventListener("change", renderReports);
+
+      document.getElementById("report-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var studentId = document.getElementById("report-student").value;
+        if (!studentId) {
+          setStatus("先に生徒を登録してください。", true);
+          return;
+        }
+        var year = parseInt(document.getElementById("report-year").value, 10);
+        var term = document.getElementById("report-term").value;
+        var sg = document.getElementById("report-grade").value;
+        if (!year || !term) {
+          setStatus("年度・時期を確認してください。", true);
+          return;
+        }
+        var subjects = {};
+        var entered = 0;
+        document.querySelectorAll("[data-report-subject]").forEach(function (sel) {
+          if (sel.value) {
+            subjects[sel.dataset.reportSubject] = parseInt(sel.value, 10);
+            entered++;
+          }
+        });
+        if (entered === 0) {
+          setStatus("少なくとも1教科を評価してください。", true);
+          return;
+        }
+        state.reports.push({
+          id: uid(),
+          studentId: studentId,
+          year: year,
+          term: term,
+          studentGrade: sg,
+          subjects: subjects,
+          note: document.getElementById("report-note").value.trim()
+        });
+        save();
+        this.reset();
+        document.getElementById("report-year").value = new Date().getFullYear();
+        updateReportTotalPreview();
+        setStatus("内申点を記録しました（" + entered + "教科）。");
+        renderAll();
+      });
+
       document.getElementById("lesson-form").addEventListener("submit", function (e) {
         e.preventDefault();
         var studentId = document.getElementById("lesson-student").value;
@@ -1010,10 +1309,19 @@
         if (!(t instanceof HTMLElement)) return;
         var sid = t.getAttribute("data-remove-student");
         if (sid) {
-          if (!confirm("この生徒を削除します。紐づく成績・授業記録も削除されます。よろしいですか？")) return;
+          if (!confirm("この生徒を削除します。紐づく成績・授業・内申点も削除されます。よろしいですか？")) return;
           state.students = state.students.filter(function (s) { return s.id !== sid; });
           state.grades = state.grades.filter(function (g) { return g.studentId !== sid; });
           state.lessons = state.lessons.filter(function (l) { return l.studentId !== sid; });
+          state.reports = state.reports.filter(function (r) { return r.studentId !== sid; });
+          save();
+          renderAll();
+          return;
+        }
+        var rid = t.getAttribute("data-remove-report");
+        if (rid) {
+          if (!confirm("この内申点を削除します。よろしいですか？")) return;
+          state.reports = state.reports.filter(function (r) { return r.id !== rid; });
           save();
           renderAll();
           return;
@@ -1090,8 +1398,7 @@
         var dueStr = due.getFullYear() + "-" + String(due.getMonth() + 1).padStart(2, "0") + "-" + String(due.getDate()).padStart(2, "0");
         document.getElementById("invoice-due").value = dueStr;
         document.getElementById("invoice-count").value = 0;
-        document.getElementById("invoice-unit-price").value = 0;
-        updateInvoicePreview();
+        document.getElementById("invoice-amount").value = 0;
       }
 
       document.getElementById("grade-filter").addEventListener("change", renderGrades);
@@ -1099,33 +1406,27 @@
       document.getElementById("invoice-filter-student").addEventListener("change", renderInvoices);
       document.getElementById("invoice-filter-status").addEventListener("change", renderInvoices);
 
-      function updateInvoicePreview() {
-        var count = parseInt(document.getElementById("invoice-count").value, 10) || 0;
-        var unit = parseInt(document.getElementById("invoice-unit-price").value, 10) || 0;
-        document.getElementById("invoice-amount-preview").value = formatYen(count * unit);
-      }
-
       function recalcLessonCount() {
         var sid = document.getElementById("invoice-student").value;
         var year = parseInt(document.getElementById("invoice-year").value, 10);
         var month = parseInt(document.getElementById("invoice-month").value, 10);
         if (!sid || !year || !month) return;
-        var n = countLessonsIn(sid, year, month);
-        document.getElementById("invoice-count").value = n;
-        updateInvoicePreview();
+        document.getElementById("invoice-count").value = countLessonsIn(sid, year, month);
+      }
+
+      function applyStudentMonthlyFee() {
+        var s = findStudent(document.getElementById("invoice-student").value);
+        if (s) {
+          document.getElementById("invoice-amount").value = studentMonthlyFee(s);
+        }
       }
 
       document.getElementById("invoice-student").addEventListener("change", function () {
-        var s = findStudent(this.value);
-        if (s) {
-          document.getElementById("invoice-unit-price").value = studentSessionRate(s);
-        }
+        applyStudentMonthlyFee();
         recalcLessonCount();
       });
       document.getElementById("invoice-year").addEventListener("change", recalcLessonCount);
       document.getElementById("invoice-month").addEventListener("change", recalcLessonCount);
-      document.getElementById("invoice-unit-price").addEventListener("input", updateInvoicePreview);
-      document.getElementById("invoice-count").addEventListener("input", updateInvoicePreview);
 
       document.getElementById("invoice-form").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -1137,19 +1438,20 @@
         var year = parseInt(document.getElementById("invoice-year").value, 10);
         var month = parseInt(document.getElementById("invoice-month").value, 10);
         var count = parseInt(document.getElementById("invoice-count").value, 10) || 0;
-        var unit = parseInt(document.getElementById("invoice-unit-price").value, 10) || 0;
-        if (!year || !month || count < 0 || unit < 0) {
+        var amount = parseInt(document.getElementById("invoice-amount").value, 10) || 0;
+        if (!year || !month || count < 0 || amount < 0) {
           setStatus("請求の入力値を確認してください。", true);
           return;
         }
+        var s = findStudent(studentId);
         state.invoices.push({
           id: uid(),
           studentId: studentId,
           year: year,
           month: month,
           lessonCount: count,
-          unitPrice: unit,
-          amount: count * unit,
+          unitPrice: s ? studentSessionRate(s) : 0,
+          amount: amount,
           status: "draft",
           issuedAt: document.getElementById("invoice-issued").value,
           dueDate: document.getElementById("invoice-due").value,
@@ -1192,7 +1494,8 @@
               students: data.students.map(migrateStudent),
               grades: data.grades,
               lessons: data.lessons,
-              invoices: Array.isArray(data.invoices) ? data.invoices : []
+              invoices: Array.isArray(data.invoices) ? data.invoices : [],
+              reports: Array.isArray(data.reports) ? data.reports : []
             };
             save();
             renderAll();
@@ -1214,9 +1517,12 @@
       });
 
       document.getElementById("grade-date").value = today();
+      document.getElementById("grade-bulk-date").value = today();
       document.getElementById("lesson-date").value = today();
+      document.getElementById("report-year").value = new Date().getFullYear();
       setInvoiceFormDefaults();
       updateStudentFeePreview();
+      updateReportTotalPreview();
       renderAll();
       var initialTab = (location.hash || "#summary").slice(1);
       activateTab(initialTab);

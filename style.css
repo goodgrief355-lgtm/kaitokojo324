@@ -2973,6 +2973,46 @@ textarea.form__input {
   font-size: 0.85rem;
 }
 
+.dash-subhead {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dash-grid-9 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.6rem;
+}
+
+.dash-mini-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.dash-mini-field span {
+  color: var(--color-text-muted);
+}
+
+.dash-mini-field input,
+.dash-mini-field select {
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.dash-mini-field input:focus,
+.dash-mini-field select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
 .dash-chip--draft {
   background: #f1ece1;
   color: #6b5a2e;
