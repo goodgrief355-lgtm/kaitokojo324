@@ -36,6 +36,29 @@
         別の端末やブラウザで利用する場合は「データ書き出し」で保存し、「データ取り込み」で復元してください。
       </p>
 
+      <section class="dash-card" aria-labelledby="summary-title">
+        <h2 id="summary-title" class="dash-card__title">今月のサマリー <span class="dash-note-inline" id="summary-month-label"></span></h2>
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <span class="dash-stat__label">生徒数</span>
+            <span class="dash-stat__value" id="stat-students">0</span>
+          </div>
+          <div class="dash-stat">
+            <span class="dash-stat__label">今月の授業数</span>
+            <span class="dash-stat__value" id="stat-lessons">0</span>
+          </div>
+          <div class="dash-stat">
+            <span class="dash-stat__label">今月の売上（確定）</span>
+            <span class="dash-stat__value" id="stat-sales">¥0</span>
+          </div>
+          <div class="dash-stat dash-stat--warn">
+            <span class="dash-stat__label">未収金</span>
+            <span class="dash-stat__value" id="stat-receivables">¥0</span>
+          </div>
+        </div>
+        <p class="dash-note" id="summary-note"></p>
+      </section>
+
       <section class="dash-card" aria-labelledby="data-io-title">
         <h2 id="data-io-title" class="dash-card__title">データの保存・復元</h2>
         <div class="dash-actions">
@@ -69,6 +92,17 @@
             <label for="student-goal">目標・志望校（任意）</label>
             <input type="text" id="student-goal" maxlength="80" placeholder="例: 地元公立トップ校合格">
           </div>
+          <div class="dash-field">
+            <label for="student-rate">単価（円）</label>
+            <input type="number" id="student-rate" min="0" max="100000" step="100" value="0">
+          </div>
+          <div class="dash-field">
+            <label for="student-rate-unit">単位</label>
+            <select id="student-rate-unit">
+              <option value="per_lesson">1回あたり</option>
+              <option value="per_hour">1時間あたり</option>
+            </select>
+          </div>
           <div class="dash-actions">
             <button type="submit" class="dash-btn">生徒を追加</button>
           </div>
@@ -77,7 +111,7 @@
         <div class="dash-table-wrap">
           <table class="dash-table" id="student-table">
             <thead>
-              <tr><th>氏名</th><th>学年</th><th>目標</th><th>成績件数</th><th>授業件数</th><th>操作</th></tr>
+              <tr><th>氏名</th><th>学年</th><th>目標</th><th>単価</th><th>成績件数</th><th>授業件数</th><th>操作</th></tr>
             </thead>
             <tbody></tbody>
           </table>
@@ -198,6 +232,81 @@
           <p class="dash-empty" id="lesson-empty" hidden>授業の記録はまだありません。</p>
         </div>
       </section>
+
+      <section class="dash-card" aria-labelledby="invoice-title">
+        <h2 id="invoice-title" class="dash-card__title">請求・支払い</h2>
+        <form class="dash-form" id="invoice-form" autocomplete="off">
+          <div class="dash-field">
+            <label for="invoice-student">生徒</label>
+            <select id="invoice-student" required></select>
+          </div>
+          <div class="dash-field">
+            <label for="invoice-year">対象年</label>
+            <input type="number" id="invoice-year" required min="2000" max="2100" step="1">
+          </div>
+          <div class="dash-field">
+            <label for="invoice-month">対象月</label>
+            <select id="invoice-month" required>
+              <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+              <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+              <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+              <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+            </select>
+          </div>
+          <div class="dash-field">
+            <label for="invoice-unit-price">単価（円）</label>
+            <input type="number" id="invoice-unit-price" required min="0" max="1000000" step="100" value="0">
+          </div>
+          <div class="dash-field">
+            <label for="invoice-count">授業回数 <span class="dash-note-inline" id="invoice-count-hint">（対象月の記録から自動）</span></label>
+            <input type="number" id="invoice-count" required min="0" max="200" step="1" value="0">
+          </div>
+          <div class="dash-field">
+            <label for="invoice-amount-preview">金額（自動計算）</label>
+            <input type="text" id="invoice-amount-preview" readonly value="¥0">
+          </div>
+          <div class="dash-field">
+            <label for="invoice-issued">発行日</label>
+            <input type="date" id="invoice-issued" required>
+          </div>
+          <div class="dash-field">
+            <label for="invoice-due">支払期限</label>
+            <input type="date" id="invoice-due" required>
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="invoice-note">備考（任意）</label>
+            <input type="text" id="invoice-note" maxlength="120" placeholder="例: 入会金含む／値引きあり">
+          </div>
+          <div class="dash-actions">
+            <button type="submit" class="dash-btn">請求を作成（未請求）</button>
+          </div>
+        </form>
+
+        <div class="dash-filter">
+          <label for="invoice-filter-student">生徒</label>
+          <select id="invoice-filter-student"><option value="">全員</option></select>
+          <label for="invoice-filter-status">ステータス</label>
+          <select id="invoice-filter-status">
+            <option value="">全て</option>
+            <option value="draft">未請求</option>
+            <option value="sent">請求済（滞納含む）</option>
+            <option value="overdue">滞納のみ</option>
+            <option value="paid">入金済</option>
+          </select>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="invoice-table">
+            <thead>
+              <tr>
+                <th>対象</th><th>生徒</th><th>回数</th><th>単価</th><th>金額</th>
+                <th>状態</th><th>発行日</th><th>期限</th><th>入金</th><th>備考</th><th>操作</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="invoice-empty" hidden>請求の記録はまだありません。</p>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -225,16 +334,31 @@
       function load() {
         try {
           var raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return { students: [], grades: [], lessons: [] };
+          if (!raw) return emptyState();
           var data = JSON.parse(raw);
+          var students = (Array.isArray(data.students) ? data.students : []).map(function (s) {
+            return {
+              id: s.id,
+              name: s.name,
+              grade: s.grade,
+              goal: s.goal || "",
+              rate: typeof s.rate === "number" ? s.rate : 0,
+              rateUnit: s.rateUnit === "per_hour" ? "per_hour" : "per_lesson"
+            };
+          });
           return {
-            students: Array.isArray(data.students) ? data.students : [],
+            students: students,
             grades: Array.isArray(data.grades) ? data.grades : [],
-            lessons: Array.isArray(data.lessons) ? data.lessons : []
+            lessons: Array.isArray(data.lessons) ? data.lessons : [],
+            invoices: Array.isArray(data.invoices) ? data.invoices : []
           };
         } catch (e) {
-          return { students: [], grades: [], lessons: [] };
+          return emptyState();
         }
+      }
+
+      function emptyState() {
+        return { students: [], grades: [], lessons: [], invoices: [] };
       }
 
       function save() {
@@ -262,6 +386,40 @@
         });
       }
 
+      function formatYen(n) {
+        var num = Number(n) || 0;
+        return "¥" + num.toLocaleString("ja-JP");
+      }
+
+      function monthKey(year, month) {
+        return year + "-" + String(month).padStart(2, "0");
+      }
+
+      function countLessonsIn(studentId, year, month) {
+        var key = monthKey(year, month);
+        return state.lessons.filter(function (l) {
+          return l.studentId === studentId && typeof l.date === "string" && l.date.slice(0, 7) === key;
+        }).length;
+      }
+
+      function isOverdue(inv) {
+        if (inv.status !== "sent" || !inv.dueDate) return false;
+        return today() > inv.dueDate;
+      }
+
+      function invoiceStatusLabel(inv) {
+        if (inv.status === "draft") return "未請求";
+        if (inv.status === "paid") return "入金済";
+        if (inv.status === "sent") return isOverdue(inv) ? "滞納" : "請求済";
+        return inv.status;
+      }
+
+      function invoiceChipClass(inv) {
+        if (inv.status === "draft") return "draft";
+        if (inv.status === "paid") return "paid";
+        return isOverdue(inv) ? "overdue" : "sent";
+      }
+
       function setStatus(msg, isError) {
         var el = document.getElementById("io-status");
         el.textContent = msg;
@@ -279,15 +437,19 @@
       }
 
       function renderStudentSelects() {
-        var selects = [
-          document.getElementById("grade-student"),
-          document.getElementById("lesson-student"),
-          document.getElementById("grade-filter"),
-          document.getElementById("lesson-filter")
+        var targets = [
+          { el: document.getElementById("grade-student"),          filter: false },
+          { el: document.getElementById("lesson-student"),         filter: false },
+          { el: document.getElementById("invoice-student"),        filter: false },
+          { el: document.getElementById("grade-filter"),           filter: true  },
+          { el: document.getElementById("lesson-filter"),          filter: true  },
+          { el: document.getElementById("invoice-filter-student"), filter: true  }
         ];
-        selects.forEach(function (sel) {
+        targets.forEach(function (t) {
+          var sel = t.el;
+          if (!sel) return;
           var prev = sel.value;
-          var isFilter = sel.id.endsWith("-filter");
+          var isFilter = t.filter;
           sel.innerHTML = "";
           if (isFilter) {
             var allOpt = document.createElement("option");
@@ -322,11 +484,15 @@
         state.students.forEach(function (s) {
           var gCount = state.grades.filter(function (g) { return g.studentId === s.id; }).length;
           var lCount = state.lessons.filter(function (l) { return l.studentId === s.id; }).length;
+          var rateText = s.rate
+            ? formatYen(s.rate) + "（" + (s.rateUnit === "per_hour" ? "1h" : "1回") + "）"
+            : "—";
           var tr = document.createElement("tr");
           tr.innerHTML =
             "<td>" + escapeHtml(s.name) + "</td>" +
             "<td>" + escapeHtml(s.grade) + "</td>" +
             "<td>" + escapeHtml(s.goal || "—") + "</td>" +
+            "<td>" + rateText + "</td>" +
             "<td>" + gCount + "</td>" +
             "<td>" + lCount + "</td>" +
             '<td><button type="button" class="dash-link" data-remove-student="' + s.id + '">削除</button></td>';
@@ -412,11 +578,109 @@
         }
       }
 
+      function renderInvoices() {
+        var tbody = document.querySelector("#invoice-table tbody");
+        var empty = document.getElementById("invoice-empty");
+        tbody.innerHTML = "";
+        var sf = document.getElementById("invoice-filter-student").value;
+        var stf = document.getElementById("invoice-filter-status").value;
+        var rows = state.invoices.slice().sort(function (a, b) {
+          var ak = monthKey(a.year, a.month);
+          var bk = monthKey(b.year, b.month);
+          if (ak !== bk) return ak < bk ? 1 : -1;
+          return a.issuedAt < b.issuedAt ? 1 : a.issuedAt > b.issuedAt ? -1 : 0;
+        });
+        if (sf) rows = rows.filter(function (inv) { return inv.studentId === sf; });
+        if (stf === "overdue") {
+          rows = rows.filter(isOverdue);
+        } else if (stf) {
+          rows = rows.filter(function (inv) { return inv.status === stf; });
+        }
+        if (!rows.length) {
+          empty.hidden = false;
+          empty.textContent = (sf || stf) ? "条件に該当する請求はありません。" : "請求の記録はまだありません。";
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (inv) {
+          var s = findStudent(inv.studentId);
+          var paidText = inv.status === "paid"
+            ? (inv.paidAt || "") + (inv.paidAmount ? "<br>" + formatYen(inv.paidAmount) : "")
+            : "—";
+          var actions = "";
+          if (inv.status === "draft") {
+            actions += '<button type="button" class="dash-link" data-invoice-action="send" data-id="' + inv.id + '">請求送付</button>';
+          }
+          if (inv.status === "sent") {
+            actions += '<button type="button" class="dash-link" data-invoice-action="pay" data-id="' + inv.id + '">入金記録</button>';
+          }
+          if (inv.status === "paid") {
+            actions += '<button type="button" class="dash-link" data-invoice-action="revert" data-id="' + inv.id + '">取消</button>';
+          }
+          actions += ' <button type="button" class="dash-link" data-invoice-action="delete" data-id="' + inv.id + '">削除</button>';
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(inv.year + "年" + inv.month + "月") + "</td>" +
+            "<td>" + escapeHtml(s ? s.name : "(削除済)") + "</td>" +
+            "<td>" + escapeHtml(String(inv.lessonCount)) + "</td>" +
+            "<td>" + escapeHtml(formatYen(inv.unitPrice)) + "</td>" +
+            "<td>" + escapeHtml(formatYen(inv.amount)) + "</td>" +
+            '<td><span class="dash-chip dash-chip--' + invoiceChipClass(inv) + '">' + escapeHtml(invoiceStatusLabel(inv)) + "</span></td>" +
+            "<td>" + escapeHtml(inv.issuedAt || "") + "</td>" +
+            "<td>" + escapeHtml(inv.dueDate || "") + "</td>" +
+            "<td>" + paidText + "</td>" +
+            "<td>" + escapeHtml(inv.note || "") + "</td>" +
+            "<td>" + actions + "</td>";
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderSummary() {
+        var now = new Date();
+        var y = now.getFullYear();
+        var m = now.getMonth() + 1;
+        var key = monthKey(y, m);
+        document.getElementById("summary-month-label").textContent = "（" + y + "年" + m + "月）";
+
+        var lessonsThisMonth = state.lessons.filter(function (l) {
+          return typeof l.date === "string" && l.date.slice(0, 7) === key;
+        }).length;
+
+        var salesThisMonth = 0;
+        var receivables = 0;
+        var pendingCount = 0;
+        state.invoices.forEach(function (inv) {
+          var isThisMonth = inv.year === y && inv.month === m;
+          if (isThisMonth && (inv.status === "sent" || inv.status === "paid")) {
+            salesThisMonth += Number(inv.amount) || 0;
+          }
+          if (inv.status === "sent") {
+            receivables += Number(inv.amount) || 0;
+            pendingCount += 1;
+          }
+        });
+
+        var overdueCount = state.invoices.filter(isOverdue).length;
+        var draftCount = state.invoices.filter(function (i) { return i.status === "draft"; }).length;
+
+        document.getElementById("stat-students").textContent = state.students.length;
+        document.getElementById("stat-lessons").textContent = lessonsThisMonth;
+        document.getElementById("stat-sales").textContent = formatYen(salesThisMonth);
+        document.getElementById("stat-receivables").textContent = formatYen(receivables);
+
+        var notes = [];
+        if (draftCount) notes.push("未請求 " + draftCount + " 件");
+        if (pendingCount) notes.push("請求済 " + pendingCount + " 件（うち滞納 " + overdueCount + " 件）");
+        document.getElementById("summary-note").textContent = notes.join(" / ");
+      }
+
       function renderAll() {
+        renderSummary();
         renderStudentSelects();
         renderStudents();
         renderGrades();
         renderLessons();
+        renderInvoices();
       }
 
       document.getElementById("student-form").addEventListener("submit", function (e) {
@@ -424,10 +688,20 @@
         var name = document.getElementById("student-name").value.trim();
         var grade = document.getElementById("student-grade").value;
         var goal = document.getElementById("student-goal").value.trim();
+        var rate = parseInt(document.getElementById("student-rate").value, 10) || 0;
+        var rateUnit = document.getElementById("student-rate-unit").value;
         if (!name || !grade) return;
-        state.students.push({ id: uid(), name: name, grade: grade, goal: goal });
+        state.students.push({
+          id: uid(),
+          name: name,
+          grade: grade,
+          goal: goal,
+          rate: rate,
+          rateUnit: rateUnit === "per_hour" ? "per_hour" : "per_lesson"
+        });
         save();
         this.reset();
+        document.getElementById("student-rate").value = 0;
         renderAll();
       });
 
@@ -511,10 +785,137 @@
           renderAll();
           return;
         }
+        var action = t.getAttribute("data-invoice-action");
+        var invId = t.getAttribute("data-id");
+        if (action && invId) {
+          handleInvoiceAction(action, invId);
+        }
       });
+
+      function handleInvoiceAction(action, invId) {
+        var idx = -1;
+        for (var i = 0; i < state.invoices.length; i++) {
+          if (state.invoices[i].id === invId) { idx = i; break; }
+        }
+        if (idx < 0) return;
+        var inv = state.invoices[idx];
+        if (action === "send") {
+          inv.status = "sent";
+        } else if (action === "pay") {
+          var paidAt = prompt("入金日 (YYYY-MM-DD)", today());
+          if (!paidAt) return;
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(paidAt)) {
+            setStatus("入金日の形式が正しくありません。", true);
+            return;
+          }
+          var amountStr = prompt("入金金額（円）", String(inv.amount));
+          if (amountStr === null) return;
+          var paidAmount = parseInt(amountStr, 10);
+          if (!(paidAmount >= 0)) {
+            setStatus("入金金額の形式が正しくありません。", true);
+            return;
+          }
+          inv.status = "paid";
+          inv.paidAt = paidAt;
+          inv.paidAmount = paidAmount;
+        } else if (action === "revert") {
+          if (!confirm("入金記録を取り消して「請求済」に戻します。よろしいですか？")) return;
+          inv.status = "sent";
+          inv.paidAt = "";
+          inv.paidAmount = 0;
+        } else if (action === "delete") {
+          if (!confirm("この請求を削除します。よろしいですか？")) return;
+          state.invoices.splice(idx, 1);
+        } else {
+          return;
+        }
+        save();
+        renderAll();
+      }
+
+      function setInvoiceFormDefaults() {
+        var d = new Date();
+        document.getElementById("invoice-year").value = d.getFullYear();
+        document.getElementById("invoice-month").value = d.getMonth() + 1;
+        document.getElementById("invoice-issued").value = today();
+        var due = new Date();
+        due.setDate(due.getDate() + 30);
+        var dueStr = due.getFullYear() + "-" + String(due.getMonth() + 1).padStart(2, "0") + "-" + String(due.getDate()).padStart(2, "0");
+        document.getElementById("invoice-due").value = dueStr;
+        document.getElementById("invoice-count").value = 0;
+        document.getElementById("invoice-unit-price").value = 0;
+        updateInvoicePreview();
+      }
 
       document.getElementById("grade-filter").addEventListener("change", renderGrades);
       document.getElementById("lesson-filter").addEventListener("change", renderLessons);
+      document.getElementById("invoice-filter-student").addEventListener("change", renderInvoices);
+      document.getElementById("invoice-filter-status").addEventListener("change", renderInvoices);
+
+      function updateInvoicePreview() {
+        var count = parseInt(document.getElementById("invoice-count").value, 10) || 0;
+        var unit = parseInt(document.getElementById("invoice-unit-price").value, 10) || 0;
+        document.getElementById("invoice-amount-preview").value = formatYen(count * unit);
+      }
+
+      function recalcLessonCount() {
+        var sid = document.getElementById("invoice-student").value;
+        var year = parseInt(document.getElementById("invoice-year").value, 10);
+        var month = parseInt(document.getElementById("invoice-month").value, 10);
+        if (!sid || !year || !month) return;
+        var n = countLessonsIn(sid, year, month);
+        document.getElementById("invoice-count").value = n;
+        updateInvoicePreview();
+      }
+
+      document.getElementById("invoice-student").addEventListener("change", function () {
+        var s = findStudent(this.value);
+        if (s) {
+          document.getElementById("invoice-unit-price").value = s.rate || 0;
+        }
+        recalcLessonCount();
+      });
+      document.getElementById("invoice-year").addEventListener("change", recalcLessonCount);
+      document.getElementById("invoice-month").addEventListener("change", recalcLessonCount);
+      document.getElementById("invoice-unit-price").addEventListener("input", updateInvoicePreview);
+      document.getElementById("invoice-count").addEventListener("input", updateInvoicePreview);
+
+      document.getElementById("invoice-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var studentId = document.getElementById("invoice-student").value;
+        if (!studentId) {
+          setStatus("先に生徒を登録してください。", true);
+          return;
+        }
+        var year = parseInt(document.getElementById("invoice-year").value, 10);
+        var month = parseInt(document.getElementById("invoice-month").value, 10);
+        var count = parseInt(document.getElementById("invoice-count").value, 10) || 0;
+        var unit = parseInt(document.getElementById("invoice-unit-price").value, 10) || 0;
+        if (!year || !month || count < 0 || unit < 0) {
+          setStatus("請求の入力値を確認してください。", true);
+          return;
+        }
+        state.invoices.push({
+          id: uid(),
+          studentId: studentId,
+          year: year,
+          month: month,
+          lessonCount: count,
+          unitPrice: unit,
+          amount: count * unit,
+          status: "draft",
+          issuedAt: document.getElementById("invoice-issued").value,
+          dueDate: document.getElementById("invoice-due").value,
+          paidAt: "",
+          paidAmount: 0,
+          note: document.getElementById("invoice-note").value.trim()
+        });
+        save();
+        this.reset();
+        setInvoiceFormDefaults();
+        renderAll();
+        setStatus("請求を作成しました（未請求）。");
+      });
 
       document.getElementById("export-btn").addEventListener("click", function () {
         var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
@@ -541,9 +942,19 @@
             }
             if (!confirm("現在のデータを取り込んだ内容で置き換えます。よろしいですか？")) return;
             state = {
-              students: data.students,
+              students: data.students.map(function (s) {
+                return {
+                  id: s.id,
+                  name: s.name,
+                  grade: s.grade,
+                  goal: s.goal || "",
+                  rate: typeof s.rate === "number" ? s.rate : 0,
+                  rateUnit: s.rateUnit === "per_hour" ? "per_hour" : "per_lesson"
+                };
+              }),
               grades: data.grades,
-              lessons: data.lessons
+              lessons: data.lessons,
+              invoices: Array.isArray(data.invoices) ? data.invoices : []
             };
             save();
             renderAll();
@@ -558,7 +969,7 @@
 
       document.getElementById("reset-btn").addEventListener("click", function () {
         if (!confirm("保存されている全データを削除します。よろしいですか？")) return;
-        state = { students: [], grades: [], lessons: [] };
+        state = emptyState();
         save();
         renderAll();
         setStatus("全データを削除しました。");
@@ -566,6 +977,7 @@
 
       document.getElementById("grade-date").value = today();
       document.getElementById("lesson-date").value = today();
+      setInvoiceFormDefaults();
       renderAll();
     })();
   </script>
