@@ -1759,8 +1759,9 @@ textarea.form__input {
   margin: 0 auto 3rem;
   max-width: 820px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  justify-content: center;
 }
 
 .stats__item {
