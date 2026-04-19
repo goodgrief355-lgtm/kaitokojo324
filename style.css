@@ -2920,3 +2920,77 @@ textarea.form__input {
     min-width: 520px;
   }
 }
+
+/* Dashboard: billing & summary */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.dash-stat {
+  background: var(--color-sub-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dash-stat__label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.dash-stat__value {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.02em;
+}
+
+.dash-stat--warn {
+  background: #fde1dc;
+  border-color: #f0b8b0;
+}
+
+.dash-stat--warn .dash-stat__value {
+  color: #9b3b31;
+}
+
+.dash-note-inline {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-left: 0.3rem;
+}
+
+.dash-chip--draft {
+  background: #f1ece1;
+  color: #6b5a2e;
+}
+
+.dash-chip--sent {
+  background: #e4dcf3;
+  color: #4a327a;
+}
+
+.dash-chip--paid {
+  background: #dff1e4;
+  color: #2b6a3e;
+}
+
+.dash-chip--overdue {
+  background: #fde1dc;
+  color: #9b3b31;
+  font-weight: 600;
+}
+
+#invoice-amount-preview {
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-sub-soft);
+}
