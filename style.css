@@ -904,10 +904,16 @@ textarea.form__input {
 /* Voices */
 .voices {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 3rem;
   text-align: left;
+}
+
+@media (max-width: 720px) {
+  .voices {
+    grid-template-columns: 1fr;
+  }
 }
 
 .voice {
@@ -2347,10 +2353,12 @@ textarea.form__input {
 /* ===== Parents section ===== */
 .parents__worries {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
   margin: 2.5rem 0 3rem;
+  padding: 0;
 }
 
 .parents__worry {
@@ -2362,6 +2370,20 @@ textarea.form__input {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  flex: 1 1 280px;
+  max-width: calc((100% - 2.5rem) / 3);
+}
+
+@media (max-width: 900px) {
+  .parents__worry {
+    max-width: calc((100% - 1.25rem) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .parents__worry {
+    max-width: 100%;
+  }
 }
 
 .parents__worry-q {
