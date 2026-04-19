@@ -117,16 +117,55 @@
             <label for="student-goal">目標・志望校（任意）</label>
             <input type="text" id="student-goal" maxlength="80" placeholder="例: 地元公立トップ校合格">
           </div>
-          <div class="dash-field">
-            <label for="student-rate">単価（円）</label>
-            <input type="number" id="student-rate" min="0" max="100000" step="100" value="0">
+          <div class="dash-field dash-field--wide">
+            <label for="student-plan-preset">料金プラン（学年×時間）</label>
+            <select id="student-plan-preset">
+              <option value="">— プランを選択（単価を自動入力）</option>
+              <optgroup label="小学生">
+                <option value="elem|60|3980">小学生 / 60分 ¥3,980</option>
+                <option value="elem|90|5770">小学生 / 90分 ¥5,770</option>
+              </optgroup>
+              <optgroup label="中学1・2年生">
+                <option value="jh12|60|4480">中1・中2 / 60分 ¥4,480</option>
+                <option value="jh12|90|6500">中1・中2 / 90分 ¥6,500</option>
+              </optgroup>
+              <optgroup label="中学3年生">
+                <option value="jh3|60|4980">中3 / 60分 ¥4,980</option>
+                <option value="jh3|90|7220">中3 / 90分 ¥7,220</option>
+              </optgroup>
+              <optgroup label="高校1・2年生">
+                <option value="hs12|60|5480">高1・高2 / 60分 ¥5,480</option>
+                <option value="hs12|90|7950">高1・高2 / 90分 ¥7,950</option>
+              </optgroup>
+              <optgroup label="高校3年生">
+                <option value="hs3|60|5980">高3 / 60分 ¥5,980</option>
+                <option value="hs3|90|8670">高3 / 90分 ¥8,670</option>
+              </optgroup>
+            </select>
+            <span class="dash-note-inline">料金表は税抜。手入力で調整可能です。</span>
           </div>
           <div class="dash-field">
-            <label for="student-rate-unit">単位</label>
-            <select id="student-rate-unit">
-              <option value="per_lesson">1回あたり</option>
-              <option value="per_hour">1時間あたり</option>
+            <label for="student-lesson-rate">コマ単価（円／1回あたり）</label>
+            <input type="number" id="student-lesson-rate" min="0" max="100000" step="10" value="0">
+          </div>
+          <div class="dash-field">
+            <label for="student-monthly-count">月回数</label>
+            <input type="number" id="student-monthly-count" min="0" max="30" step="1" value="4">
+          </div>
+          <div class="dash-field">
+            <label for="student-lesson-minutes">授業時間</label>
+            <select id="student-lesson-minutes">
+              <option value="60">60分</option>
+              <option value="90">90分</option>
             </select>
+          </div>
+          <div class="dash-field">
+            <label for="student-system-fee">システム料（円／月）</label>
+            <input type="number" id="student-system-fee" min="0" max="100000" step="100" value="3300">
+          </div>
+          <div class="dash-field dash-field--wide">
+            <label for="student-fee-preview">月謝（自動計算） <span class="dash-note-inline">コマ単価 × 月回数 + システム料</span></label>
+            <input type="text" id="student-fee-preview" readonly value="¥0">
           </div>
           <div class="dash-actions">
             <button type="submit" class="dash-btn">生徒を追加</button>
@@ -136,7 +175,7 @@
         <div class="dash-table-wrap">
           <table class="dash-table" id="student-table">
             <thead>
-              <tr><th>氏名</th><th>学年</th><th>目標</th><th>単価</th><th>成績件数</th><th>授業件数</th><th>操作</th></tr>
+              <tr><th>氏名</th><th>学年</th><th>目標</th><th>月謝</th><th>内訳</th><th>成績件数</th><th>授業件数</th><th>操作</th></tr>
             </thead>
             <tbody></tbody>
           </table>
@@ -383,16 +422,7 @@
           var raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return emptyState();
           var data = JSON.parse(raw);
-          var students = (Array.isArray(data.students) ? data.students : []).map(function (s) {
-            return {
-              id: s.id,
-              name: s.name,
-              grade: s.grade,
-              goal: s.goal || "",
-              rate: typeof s.rate === "number" ? s.rate : 0,
-              rateUnit: s.rateUnit === "per_hour" ? "per_hour" : "per_lesson"
-            };
-          });
+          var students = (Array.isArray(data.students) ? data.students : []).map(migrateStudent);
           return {
             students: students,
             grades: Array.isArray(data.grades) ? data.grades : [],
@@ -406,6 +436,47 @@
 
       function emptyState() {
         return { students: [], grades: [], lessons: [], invoices: [] };
+      }
+
+      function migrateStudent(s) {
+        var lessonRate = typeof s.lessonRate === "number" ? s.lessonRate
+          : typeof s.rate === "number" ? s.rate
+          : 0;
+        var monthlyCount = typeof s.monthlyCount === "number" ? s.monthlyCount : 0;
+        var lessonMinutes = s.lessonMinutes === 90 ? 90 : 60;
+        var systemFee = typeof s.systemFee === "number" ? s.systemFee : 0;
+        return {
+          id: s.id,
+          name: s.name,
+          grade: s.grade,
+          goal: s.goal || "",
+          lessonRate: lessonRate,
+          monthlyCount: monthlyCount,
+          lessonMinutes: lessonMinutes,
+          systemFee: systemFee
+        };
+      }
+
+      function studentMonthlyFee(s) {
+        if (!s) return 0;
+        return Math.round((s.lessonRate || 0) * (s.monthlyCount || 0) + (s.systemFee || 0));
+      }
+
+      function studentSessionRate(s) {
+        if (!s) return 0;
+        return s.lessonRate || 0;
+      }
+
+      function studentFeeBreakdown(s) {
+        if (!s || !s.lessonRate) return "—";
+        var parts = [
+          "@¥" + (s.lessonRate || 0).toLocaleString("ja-JP"),
+          "月" + (s.monthlyCount || 0) + "回",
+          (s.lessonMinutes === 90 ? "90分" : "60分")
+        ];
+        var text = parts.join(" / ");
+        if (s.systemFee) text += " + ¥" + s.systemFee.toLocaleString("ja-JP");
+        return text;
       }
 
       function save() {
@@ -531,15 +602,16 @@
         state.students.forEach(function (s) {
           var gCount = state.grades.filter(function (g) { return g.studentId === s.id; }).length;
           var lCount = state.lessons.filter(function (l) { return l.studentId === s.id; }).length;
-          var rateText = s.rate
-            ? formatYen(s.rate) + "（" + (s.rateUnit === "per_hour" ? "1h" : "1回") + "）"
-            : "—";
+          var fee = studentMonthlyFee(s);
+          var feeText = fee ? formatYen(fee) : "—";
+          var breakdown = studentFeeBreakdown(s);
           var tr = document.createElement("tr");
           tr.innerHTML =
             "<td>" + escapeHtml(s.name) + "</td>" +
             "<td>" + escapeHtml(s.grade) + "</td>" +
             "<td>" + escapeHtml(s.goal || "—") + "</td>" +
-            "<td>" + rateText + "</td>" +
+            "<td>" + feeText + "</td>" +
+            '<td class="dash-cell--muted">' + escapeHtml(breakdown) + "</td>" +
             "<td>" + gCount + "</td>" +
             "<td>" + lCount + "</td>" +
             '<td><button type="button" class="dash-link" data-remove-student="' + s.id + '">削除</button></td>';
@@ -824,21 +896,60 @@
         var name = document.getElementById("student-name").value.trim();
         var grade = document.getElementById("student-grade").value;
         var goal = document.getElementById("student-goal").value.trim();
-        var rate = parseInt(document.getElementById("student-rate").value, 10) || 0;
-        var rateUnit = document.getElementById("student-rate-unit").value;
+        var lessonRate = parseInt(document.getElementById("student-lesson-rate").value, 10) || 0;
+        var monthlyCount = parseInt(document.getElementById("student-monthly-count").value, 10) || 0;
+        var lessonMinutes = parseInt(document.getElementById("student-lesson-minutes").value, 10) === 90 ? 90 : 60;
+        var systemFee = parseInt(document.getElementById("student-system-fee").value, 10) || 0;
         if (!name || !grade) return;
         state.students.push({
           id: uid(),
           name: name,
           grade: grade,
           goal: goal,
-          rate: rate,
-          rateUnit: rateUnit === "per_hour" ? "per_hour" : "per_lesson"
+          lessonRate: lessonRate,
+          monthlyCount: monthlyCount,
+          lessonMinutes: lessonMinutes,
+          systemFee: systemFee
         });
         save();
         this.reset();
-        document.getElementById("student-rate").value = 0;
+        resetStudentFormDefaults();
         renderAll();
+      });
+
+      function resetStudentFormDefaults() {
+        document.getElementById("student-plan-preset").value = "";
+        document.getElementById("student-lesson-rate").value = 0;
+        document.getElementById("student-monthly-count").value = 4;
+        document.getElementById("student-lesson-minutes").value = "60";
+        document.getElementById("student-system-fee").value = 3300;
+        updateStudentFeePreview();
+      }
+
+      document.getElementById("student-plan-preset").addEventListener("change", function () {
+        if (!this.value) return;
+        var parts = this.value.split("|");
+        var minutes = parseInt(parts[1], 10) === 90 ? 90 : 60;
+        var price = parseInt(parts[2], 10) || 0;
+        document.getElementById("student-lesson-minutes").value = String(minutes);
+        document.getElementById("student-lesson-rate").value = price;
+        updateStudentFeePreview();
+      });
+
+      function updateStudentFeePreview() {
+        var tempStudent = {
+          lessonRate: parseInt(document.getElementById("student-lesson-rate").value, 10) || 0,
+          monthlyCount: parseInt(document.getElementById("student-monthly-count").value, 10) || 0,
+          lessonMinutes: parseInt(document.getElementById("student-lesson-minutes").value, 10) === 90 ? 90 : 60,
+          systemFee: parseInt(document.getElementById("student-system-fee").value, 10) || 0
+        };
+        document.getElementById("student-fee-preview").value = formatYen(studentMonthlyFee(tempStudent));
+      }
+
+      ["student-lesson-rate", "student-monthly-count", "student-lesson-minutes", "student-system-fee"].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener("input", updateStudentFeePreview);
+        if (el && el.tagName === "SELECT") el.addEventListener("change", updateStudentFeePreview);
       });
 
       document.getElementById("grade-form").addEventListener("submit", function (e) {
@@ -1007,7 +1118,7 @@
       document.getElementById("invoice-student").addEventListener("change", function () {
         var s = findStudent(this.value);
         if (s) {
-          document.getElementById("invoice-unit-price").value = s.rate || 0;
+          document.getElementById("invoice-unit-price").value = studentSessionRate(s);
         }
         recalcLessonCount();
       });
@@ -1078,16 +1189,7 @@
             }
             if (!confirm("現在のデータを取り込んだ内容で置き換えます。よろしいですか？")) return;
             state = {
-              students: data.students.map(function (s) {
-                return {
-                  id: s.id,
-                  name: s.name,
-                  grade: s.grade,
-                  goal: s.goal || "",
-                  rate: typeof s.rate === "number" ? s.rate : 0,
-                  rateUnit: s.rateUnit === "per_hour" ? "per_hour" : "per_lesson"
-                };
-              }),
+              students: data.students.map(migrateStudent),
               grades: data.grades,
               lessons: data.lessons,
               invoices: Array.isArray(data.invoices) ? data.invoices : []
@@ -1114,6 +1216,7 @@
       document.getElementById("grade-date").value = today();
       document.getElementById("lesson-date").value = today();
       setInvoiceFormDefaults();
+      updateStudentFeePreview();
       renderAll();
       var initialTab = (location.hash || "#summary").slice(1);
       activateTab(initialTab);
