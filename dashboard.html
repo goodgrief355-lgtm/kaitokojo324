@@ -36,6 +36,16 @@
         別の端末やブラウザで利用する場合は「データ書き出し」で保存し、「データ取り込み」で復元してください。
       </p>
 
+      <nav class="dash-tabs" role="tablist" aria-label="ダッシュボードのセクション">
+        <button type="button" class="dash-tab is-active" role="tab" id="tab-summary" data-tab="summary" aria-selected="true" aria-controls="panel-summary">サマリー</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-students" data-tab="students" aria-selected="false" aria-controls="panel-students">生徒</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-grades" data-tab="grades" aria-selected="false" aria-controls="panel-grades">成績</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-lessons" data-tab="lessons" aria-selected="false" aria-controls="panel-lessons">授業</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-invoices" data-tab="invoices" aria-selected="false" aria-controls="panel-invoices">請求</button>
+        <button type="button" class="dash-tab" role="tab" id="tab-data" data-tab="data" aria-selected="false" aria-controls="panel-data">データ</button>
+      </nav>
+
+      <div class="dash-panel" id="panel-summary" role="tabpanel" aria-labelledby="tab-summary" data-panel="summary">
       <section class="dash-card" aria-labelledby="summary-title">
         <h2 id="summary-title" class="dash-card__title">今月のサマリー <span class="dash-note-inline" id="summary-month-label"></span></h2>
         <div class="dash-stats">
@@ -59,19 +69,34 @@
         <p class="dash-note" id="summary-note"></p>
       </section>
 
-      <section class="dash-card" aria-labelledby="data-io-title">
-        <h2 id="data-io-title" class="dash-card__title">データの保存・復元</h2>
-        <div class="dash-actions">
-          <button type="button" class="dash-btn" id="export-btn">データ書き出し（JSON）</button>
-          <label class="dash-btn dash-btn--ghost">
-            データ取り込み
-            <input type="file" id="import-file" accept="application/json,.json" hidden>
-          </label>
-          <button type="button" class="dash-btn dash-btn--danger" id="reset-btn">全データ削除</button>
+      <section class="dash-card" aria-labelledby="recent-grades-title">
+        <h2 id="recent-grades-title" class="dash-card__title">直近の成績</h2>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="recent-grades-table">
+            <thead>
+              <tr><th>日付</th><th>生徒</th><th>科目</th><th>テスト</th><th>得点</th><th>割合</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="recent-grades-empty" hidden>成績の記録はまだありません。</p>
         </div>
-        <p class="dash-note" id="io-status" role="status" aria-live="polite"></p>
       </section>
 
+      <section class="dash-card" aria-labelledby="recent-lessons-title">
+        <h2 id="recent-lessons-title" class="dash-card__title">直近の授業</h2>
+        <div class="dash-table-wrap">
+          <table class="dash-table" id="recent-lessons-table">
+            <thead>
+              <tr><th>日付</th><th>生徒</th><th>科目</th><th>単元</th><th>進捗</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <p class="dash-empty" id="recent-lessons-empty" hidden>授業の記録はまだありません。</p>
+        </div>
+      </section>
+      </div>
+
+      <div class="dash-panel" id="panel-students" role="tabpanel" aria-labelledby="tab-students" data-panel="students" hidden>
       <section class="dash-card" aria-labelledby="student-title">
         <h2 id="student-title" class="dash-card__title">生徒の登録</h2>
         <form class="dash-form" id="student-form" autocomplete="off">
@@ -118,7 +143,9 @@
           <p class="dash-empty" id="student-empty" hidden>まだ生徒が登録されていません。</p>
         </div>
       </section>
+      </div>
 
+      <div class="dash-panel" id="panel-grades" role="tabpanel" aria-labelledby="tab-grades" data-panel="grades" hidden>
       <section class="dash-card" aria-labelledby="grade-title">
         <h2 id="grade-title" class="dash-card__title">成績の入力</h2>
         <form class="dash-form" id="grade-form" autocomplete="off">
@@ -173,7 +200,9 @@
           <p class="dash-empty" id="grade-empty" hidden>成績の記録はまだありません。</p>
         </div>
       </section>
+      </div>
 
+      <div class="dash-panel" id="panel-lessons" role="tabpanel" aria-labelledby="tab-lessons" data-panel="lessons" hidden>
       <section class="dash-card" aria-labelledby="lesson-title">
         <h2 id="lesson-title" class="dash-card__title">授業進捗の入力</h2>
         <form class="dash-form" id="lesson-form" autocomplete="off">
@@ -232,7 +261,9 @@
           <p class="dash-empty" id="lesson-empty" hidden>授業の記録はまだありません。</p>
         </div>
       </section>
+      </div>
 
+      <div class="dash-panel" id="panel-invoices" role="tabpanel" aria-labelledby="tab-invoices" data-panel="invoices" hidden>
       <section class="dash-card" aria-labelledby="invoice-title">
         <h2 id="invoice-title" class="dash-card__title">請求・支払い</h2>
         <form class="dash-form" id="invoice-form" autocomplete="off">
@@ -307,6 +338,22 @@
           <p class="dash-empty" id="invoice-empty" hidden>請求の記録はまだありません。</p>
         </div>
       </section>
+      </div>
+
+      <div class="dash-panel" id="panel-data" role="tabpanel" aria-labelledby="tab-data" data-panel="data" hidden>
+      <section class="dash-card" aria-labelledby="data-io-title">
+        <h2 id="data-io-title" class="dash-card__title">データの保存・復元</h2>
+        <div class="dash-actions">
+          <button type="button" class="dash-btn" id="export-btn">データ書き出し（JSON）</button>
+          <label class="dash-btn dash-btn--ghost">
+            データ取り込み
+            <input type="file" id="import-file" accept="application/json,.json" hidden>
+          </label>
+          <button type="button" class="dash-btn dash-btn--danger" id="reset-btn">全データ削除</button>
+        </div>
+        <p class="dash-note" id="io-status" role="status" aria-live="polite"></p>
+      </section>
+      </div>
     </div>
   </main>
 
@@ -674,14 +721,103 @@
         document.getElementById("summary-note").textContent = notes.join(" / ");
       }
 
+      function renderRecentGrades() {
+        var tbody = document.querySelector("#recent-grades-table tbody");
+        var empty = document.getElementById("recent-grades-empty");
+        tbody.innerHTML = "";
+        var rows = state.grades.slice().sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        }).slice(0, 5);
+        if (!rows.length) {
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (g) {
+          var s = findStudent(g.studentId);
+          var pct = g.max > 0 ? ((g.score / g.max) * 100).toFixed(1) + "%" : "—";
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(g.date) + "</td>" +
+            "<td>" + escapeHtml(s ? s.name : "(削除済)") + "</td>" +
+            "<td>" + escapeHtml(g.subject) + "</td>" +
+            "<td>" + escapeHtml(g.exam) + "</td>" +
+            "<td>" + escapeHtml(g.score + " / " + g.max) + "</td>" +
+            "<td>" + pct + "</td>";
+          tbody.appendChild(tr);
+        });
+      }
+
+      function renderRecentLessons() {
+        var tbody = document.querySelector("#recent-lessons-table tbody");
+        var empty = document.getElementById("recent-lessons-empty");
+        tbody.innerHTML = "";
+        var rows = state.lessons.slice().sort(function (a, b) {
+          return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+        }).slice(0, 5);
+        if (!rows.length) {
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        rows.forEach(function (l) {
+          var s = findStudent(l.studentId);
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td>" + escapeHtml(l.date) + "</td>" +
+            "<td>" + escapeHtml(s ? s.name : "(削除済)") + "</td>" +
+            "<td>" + escapeHtml(l.subject) + "</td>" +
+            "<td>" + escapeHtml(l.topic) + "</td>" +
+            '<td><span class="dash-chip dash-chip--' + chipClass(l.progress) + '">' + escapeHtml(l.progress) + "</span></td>";
+          tbody.appendChild(tr);
+        });
+      }
+
       function renderAll() {
         renderSummary();
+        renderRecentGrades();
+        renderRecentLessons();
         renderStudentSelects();
         renderStudents();
         renderGrades();
         renderLessons();
         renderInvoices();
       }
+
+      function activateTab(name) {
+        var tabs = document.querySelectorAll(".dash-tab");
+        var panels = document.querySelectorAll(".dash-panel");
+        var found = false;
+        tabs.forEach(function (t) {
+          var active = t.getAttribute("data-tab") === name;
+          t.classList.toggle("is-active", active);
+          t.setAttribute("aria-selected", active ? "true" : "false");
+          t.setAttribute("tabindex", active ? "0" : "-1");
+          if (active) found = true;
+        });
+        if (!found) {
+          activateTab("summary");
+          return;
+        }
+        panels.forEach(function (p) {
+          p.hidden = p.getAttribute("data-panel") !== name;
+        });
+        try {
+          if (history.replaceState) history.replaceState(null, "", "#" + name);
+          else location.hash = name;
+        } catch (e) {}
+      }
+
+      document.querySelectorAll(".dash-tab").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          activateTab(this.getAttribute("data-tab"));
+        });
+      });
+
+      window.addEventListener("hashchange", function () {
+        var name = (location.hash || "#summary").slice(1);
+        activateTab(name);
+      });
 
       document.getElementById("student-form").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -979,6 +1115,8 @@
       document.getElementById("lesson-date").value = today();
       setInvoiceFormDefaults();
       renderAll();
+      var initialTab = (location.hash || "#summary").slice(1);
+      activateTab(initialTab);
     })();
   </script>
 </body>
