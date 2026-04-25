@@ -3411,9 +3411,14 @@ textarea.form__input {
     grid-template-columns: 1fr;
   }
   .outcome-case__arrow {
-    padding: 0.4rem 0;
-    transform: rotate(90deg);
+    width: 100%;
+    padding: 0.5rem 0;
     background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .outcome-case__arrow svg {
+    transform: rotate(90deg);
   }
   .outcome-case__side {
     padding: 1.1rem 1.15rem;
