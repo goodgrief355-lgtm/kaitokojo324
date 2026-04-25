@@ -453,16 +453,19 @@ img {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: #fff;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  font-weight: 600;
   margin: 0 auto 1.5rem;
-  letter-spacing: 0.05em;
   box-shadow: var(--shadow-md);
+  background: var(--color-sub-soft);
+}
+
+.teacher__avatar svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .teacher__meta {
@@ -1277,7 +1280,6 @@ textarea.form__input {
   .teacher__avatar {
     width: 120px;
     height: 120px;
-    font-size: 2.2rem;
   }
   .hero__inner {
     grid-template-columns: 1fr;
@@ -1936,22 +1938,18 @@ textarea.form__input {
   color: #fff;
 }
 
-/* ===== Avatar monogram refinement ===== */
+/* ===== Avatar refinement ===== */
 .teacher__avatar {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 50%, #0c1a30 100%);
   position: relative;
-  font-family: var(--font-serif);
-  font-size: 2.6rem;
-  letter-spacing: 0.08em;
-  box-shadow: var(--shadow-md), inset 0 0 0 6px rgba(255, 255, 255, 0.06);
   border: 3px solid #fff;
   outline: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
 }
 
 .teacher__avatar::before {
   content: "";
   position: absolute;
-  inset: -3px;
+  inset: -6px;
   border-radius: 50%;
   background: conic-gradient(from 90deg, var(--color-accent), transparent 30%, var(--color-accent) 60%, transparent 90%);
   z-index: -1;
