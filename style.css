@@ -1314,7 +1314,7 @@ textarea.form__input {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--color-bg);
+    background: #ffffff;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -1323,6 +1323,7 @@ textarea.form__input {
     transition: transform 0.3s;
     overflow-y: auto;
     z-index: 110;
+    box-shadow: -8px 0 24px rgba(31, 58, 95, 0.1);
   }
   .nav__menu--open {
     transform: translateX(0);
@@ -1332,12 +1333,24 @@ textarea.form__input {
   }
   .nav__menu a {
     display: block;
-    padding: 1rem 0.5rem;
-    font-size: 1rem;
+    padding: 1.1rem 0.75rem;
+    font-size: 1.05rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    opacity: 1;
+  }
+  .nav__menu a:hover,
+  .nav__menu a:focus {
+    color: var(--color-accent);
+    background: var(--color-sub-soft);
   }
   .nav__cta {
     margin-top: 1rem;
     text-align: center;
+  }
+  body.no-scroll .float-cta {
+    display: none;
   }
   .hero {
     padding: 4rem 1.25rem 5rem;
