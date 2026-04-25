@@ -1156,6 +1156,47 @@
   </div>
 
   <script>
+    /* Mobile menu toggle - 独立スクリプト (他の処理が失敗しても確実に動作) */
+    (function () {
+      function setup() {
+        var toggle = document.querySelector(".nav__toggle");
+        var menu = document.getElementById("nav-menu");
+        if (!toggle || !menu) return;
+
+        function setOpen(open) {
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+          menu.classList.toggle("nav__menu--open", open);
+          document.body.classList.toggle("no-scroll", open);
+        }
+
+        toggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          var expanded = toggle.getAttribute("aria-expanded") === "true";
+          setOpen(!expanded);
+        });
+
+        menu.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () { setOpen(false); });
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && menu.classList.contains("nav__menu--open")) {
+            setOpen(false);
+            toggle.focus();
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setup);
+      } else {
+        setup();
+      }
+    })();
+  </script>
+
+  <script>
     (function () {
       var banner = document.getElementById("cookie-banner");
       var floatCta = document.getElementById("float-cta");
@@ -1179,11 +1220,13 @@
         if (!dismissed) {
           banner.hidden = false;
           var closeBtn = banner.querySelector(".cookie-banner__close");
-          closeBtn.addEventListener("click", function () {
-            banner.hidden = true;
-            try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
-            updateFloatCta();
-          });
+          if (closeBtn) {
+            closeBtn.addEventListener("click", function () {
+              banner.hidden = true;
+              try { localStorage.setItem("cookie-notice-dismissed", "1"); } catch (e) {}
+              updateFloatCta();
+            });
+          }
         }
       }
 
@@ -1191,26 +1234,6 @@
         window.addEventListener("scroll", updateFloatCta, { passive: true });
         window.addEventListener("resize", updateFloatCta);
         updateFloatCta();
-      }
-
-      var toggle = document.querySelector(".nav__toggle");
-      var menu = document.getElementById("nav-menu");
-      if (toggle && menu) {
-        toggle.addEventListener("click", function () {
-          var expanded = toggle.getAttribute("aria-expanded") === "true";
-          toggle.setAttribute("aria-expanded", !expanded);
-          toggle.setAttribute("aria-label", expanded ? "メニューを開く" : "メニューを閉じる");
-          menu.classList.toggle("nav__menu--open");
-          document.body.classList.toggle("no-scroll", !expanded);
-        });
-        menu.querySelectorAll("a").forEach(function (link) {
-          link.addEventListener("click", function () {
-            toggle.setAttribute("aria-expanded", "false");
-            toggle.setAttribute("aria-label", "メニューを開く");
-            menu.classList.remove("nav__menu--open");
-            document.body.classList.remove("no-scroll");
-          });
-        });
       }
 
       var revealEls = document.querySelectorAll("[data-reveal]");
