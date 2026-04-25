@@ -3125,6 +3125,78 @@ textarea.form__input {
   }
 }
 
+/* ===== Hero SNS (LINE / Instagram) ===== */
+.hero__sns {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.85rem;
+  margin: 1.5rem 0 0;
+}
+
+.hero__sns-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.hero__sns-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: transform 0.2s, box-shadow 0.2s, color 0.2s, border-color 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero__sns-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  transition: color 0.2s;
+}
+
+.hero__sns-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.hero__sns-link--line:hover {
+  color: #06c755;
+  border-color: #06c755;
+}
+
+.hero__sns-link--ig:hover {
+  color: #d7297a;
+  border-color: #d7297a;
+}
+
+@media (max-width: 900px) {
+  .hero__sns {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__sns {
+    gap: 0.5rem 0.6rem;
+  }
+  .hero__sns-label {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* ===== Hero trust badge ===== */
 .hero__trust {
   display: inline-flex;
