@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://goodgrief355-lgtm.github.io/kaitokojo324/</loc>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://goodgrief355-lgtm.github.io/kaitokojo324/privacy.html</loc>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/contact.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/blog/teiki-test-points-up.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/blog/naishin-up-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/blog/sougougata-senbatsu-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://goodgrief355-lgtm.github.io/kaitokojo324/terms.html</loc>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/terms.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://goodgrief355-lgtm.github.io/kaitokojo324/tokusho.html</loc>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/tokusho.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
