@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://online-miraiplan.github.io/mirai-coaching/blog/jisou-switch-method.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://online-miraiplan.github.io/mirai-coaching/blog/teiki-test-points-up.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
